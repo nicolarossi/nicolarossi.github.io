@@ -4,8 +4,8 @@
 	<title>
 	Curriculum vitae Nicola Rossi
 	</title>
-	<link rel="stylesheet" href="reveal.css">
-	<link rel="stylesheet" href="default.css" id="theme"	>	
+	<link rel="stylesheet" href="css/reveal.css">
+	<link rel="stylesheet" href="css/theme/default.css" id="theme"	>	
 	<!--Add support for earlier versions of Internet Explorer -->
 	<!--[if lt IE 9]>
 	<script src="lib/js/html5shiv.js"></script>
