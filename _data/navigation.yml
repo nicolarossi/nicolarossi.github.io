@@ -11,15 +11,15 @@
   side: left  
   dropdown:
   - title: "Who am I"
-    url: "/cv/whoami/"
+    url: "/cv/whoami/#summary/"
   - title: "Job Experience"
-    url: "/cv/experience/"
-  - title: "Education"
-    url: "/cv/education/"
-  - title: "Training"
-    url: "/cv/training/"
-  - title: "Publication"
-    url: "/cv/publication/"
+    url: "/cv/whoami/#job-experience"
+  - title: "Education & Training"
+    url: "/cv/whoami/#education-and-training"
+  - title: "Technologies"
+    url: "/cv/whoami/#technologies"
+  - title: "Publications"
+    url: "/cv/whoami/#publications"
   
 - title: "Project released"
   url: "/project/"
