@@ -7,7 +7,7 @@
 layout: frontpage
 title: "Nicola Rossi – Blog"
 header:
-   image_fullwidth: "meduse-1600x503-horizontally_flipped.png"
+   image_fullwidth: "lago_braies_croda_becco_1600x503.png"
 widget-1:
     title: "Blog & News"
     url: 'http://localhost:4000/blog/'
@@ -15,9 +15,9 @@ widget-1:
     image: blank_page-302x201.png
 widget-2:
     title: "Career portfolio"
-    url: 'http://localhost:4000/cv/'
+    url: 'http://localhost:4000/cv/whoami'
     text: '<em>Professional presentation:</em></br> An extensive personal presentation useful to Human-Resource dept staff looking a genius :)'
-    image: walking-302x227.png
+    image: street-302x227.png
 widget-3:
     title: "Download projects"
     url: 'https://github.com/nicolarossi'
