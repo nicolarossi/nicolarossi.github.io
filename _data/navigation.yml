@@ -7,7 +7,7 @@
   side: left
 
 - title: Career portfolio
-  url: "/cv/"
+  url: "/cv/whoami"
   side: left  
   dropdown:
   - title: "Who am I"
