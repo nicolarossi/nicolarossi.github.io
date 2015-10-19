@@ -29,349 +29,48 @@ categories:
 
 ## Lato – A dynamic memory manager.
 
-A "memory manager" is a piece of software able to handle a slice of RAM memory.
+Un gestore di memoria "memory manager" è semplicemente una porzione di codice che per "contratto" gestira la memoria RAM a vostra disposizione.
 
-The kernel's memory manager is able to handle the whole hardware memory.
+Il memory manager di cui è fornito il kernel del vostro sistema operativo è capace di gestire tutta la memoria hardware di cui dispone il vostro pc/server .
 
-This memory manager (MM) was written to increase the performance of mine chess engine (it will be the subject of future post).
+Per fare questo utilizza una serie di layer software per fornire i servizi di gestione della RAM come:
 
-The main traits of this MM are 2:
-<el>
+- Ogni processo dispone in linea teorica dell'intero spazio di indirizzamento<sub>logico</sub>, che su macchine da 32bit è di 4Gbyte; quindi come fanno più processi a condividere uno stesso spazio la cui somma totale può superare quella dello spazio degli indirizzi fisici di una macchina? (C'era un tempo, quando eravate piccoli, che i desktop avevano solo pochi Gbyte di Ram ).
+La risposta è nel servizio di <strong>Traduzione da indirizzi logici a fisici</strong>
+
+- Esiste un concetto nella architettura  dei calcolatori che si chiama "gerarchia di memoria", che si può spiegare con una metafora descritta in un post apposito.
+
+La gestione della memoria "virtuale" (o di swap) divide lo spazio d'indirizzamento in "pagine" e gestisce la loro posizione nella gerarchia di memoria.
+
+- Gestione della memoria logica "allocando"/"deallocando" memoria al processo che la richiede/libera.
+
+I primi 2 punti vengono effettuati dal sistema operativo insieme alla collaborazione dei firmware dei vari device sottostanti (dischi rigidi, RAM, Cache) .
+
+Il terzo punto invece richiede la collaborazione del processo che usa la memoria, tramite l'uso di 2 API fondamentali .
+malloc
+free 
+
+La prima richiede al sistema operativo l'allocazione dinamica (ossia a durante l'esecuzione del programma) di un certo quantitativo  di memoria richiesta per lavorare.
+La seconda invece informa il sistema operativo che un'area di memoria prima richiesta non è più necessaria.
+
+Perciò basta anteporsi al kernel, durante la fornitura di queste API per fare un proprio gestore della memoria.
+
+Quali sono i vantaggi?
+<ul>
 <il>
-is to be executed in user space without calling syscall API like kmalloc that overheading the CPU load switching into kernel mode.
+Maggiore controllo per il debugging
 </il>
 <il>
-to not handle 
+Performance (in alcuni casi specifici) maggiori.
+Minor numero di salti tra user-mode e kernel-mode (questi "salti" creano dei sovraccarichi alla CPU per switchare in kernel mode.
 </il>
-</el>
+</ul>
 
+Il primo punto può implementare (per esempio) un sistema di controllo per impedire che vengano effettuate 2 free sulla stessa area di memoria.
 
+Il secondo puntò è vero in casi rari ed eccezionali, un esempio che è quello che mi ha portato a scrivere questo memory manager è accaduto all'autore quando per diletto ha progettato un motore di scacchi; tale software faceva un vastissimo uso di malloc() e free() (occupavano il 60% delle operazioni) e per questo invece di riscrivere il codice in una forma in cui non usasse tali operazioni, ha riscritto le malloc() e free() in modo che fossero più performanti.
 
-## About Volkhov &lt;h2&gt; 
-
-Volkhov is a low-contrast seriffed typeface with a robust character, intended for providing a motivating reading experience. Volkhov was designed by Ivan Petrov.
-
-### Feeling Responsive uses Volkhov for...  &lt;h3&gt;
-
-* &lt;h1&gt;-headings
-* &lt;h2&gt;-headings
-* &lt;h3&gt;-headings
-* &lt;h4&gt;-headings
-* &lt;h5&gt;-headings
-* &lt;h6&gt;-headings
-
-
-#### Heading in Volkhov &lt;h4&gt;
-
-As a four-weight family it is well-suited for complex text environments being economic and legible, contemporary and prominent. Many of its design solutions relate to this purpose: large open counters, rather short descenders, and brutal asymmetric serifs.
-
-#### Heading in Volkhov &lt;h5&gt;
-
-Spacing in Bold is slightly increased compared to the normal weight, because the bold mass is mostly grown inwards. The Italic has a steep angle and a distinctive calligraphically reminiscent character, as a counterpart to the rigorous Regular.
-
-
-
-## Modular Scale
-
-*Feeling Responsive* explores the *2:3 perfect fifth* modular scale created with [www.modular-scale.com][7]. This is the modular scale of  *Feeling Responsive*.
-
-44px @ 1:1.5 – Ideal text size  
-16px @ 1:1.5 – Important number
-
-Modular Scale |    |   |
----------- | ----------- | -----
-44.000  |   1 |  2.75   |  338.462
-36.000  |   0.818  |  2.25   |  276.923
-29.333  |   0.667 |   1.833  |  225.638
-24.000   |  0.545  |  1.5 |   184.615
-19.555  |   0.444 |   1.222   | 150.423
-16.000 |    0.364   | 1  |  123.077
-
-
-
-## Typographical Elements
-{: .t60 }
-
-Here you'll find the [complete list of HTML5-Tags][1] and this is how they look like.
-
-### &lt;hr&gt; Horizontal Line
-<hr>
-
-
-### &lt;pre&gt; Displaying Code
-~~~
-<html>
-    <head>
-        <title>Code Blocks</title>
-    </head>
-    <body></body>
-</html>
-~~~
-
-
-### &lt;blockquote&gt; Quotation
-<blockquote>Everything happens for a reason. (Britney Spears)</blockquote>
-
-### &lt;blockquote&gt; and &lt;cite&gt;  together
-
-> Age is an issue of mind over matter. If you don't mind, it doesn't matter.
-<cite>Mark Twain</cite>
-
-
-### &lt;ol&gt; Ordered Lists
-
-1. Ordered List
-2. Second List Item
-3. Third List Item
-    4. Second Level First Item
-    4. Second Level Second Item
-    4. Second Level Third Item
-        5. And a third level First Item
-        5. And a third level Second Item
-        5. And a third level Third Item
-4. Fourth List Item
-5. Fifth List Item
-
-
-### &lt;ul&gt; Unordered Lists
-
-- Unordered List
-- Second List Item
-- Third List Item
-    + Second Level First Item
-    + Second Level Second Item
-    + Second Level Third Item
-        * And a third level First Item
-        * And a third level Second Item
-        * And a third level Third Item
-- Fourth List Item
-- Fifth List Item
-
-### &lt;dl&gt; Definition Lists
-
-Definition List
-:   Bacon ipsum dolor sit amet spare ribs brisket ribeye, andouille sirloin bresaola frankfurter corned beef capicola bacon. Salami beef ribs sirloin, short loin hamburger shoulder t-bone.
-
-Beef ribs jowl swine porchetta
-:   Sirloin tenderloin swine frankfurter pork loin pork capicola ham hock strip steak ribeye beef ribs. Hamburger t-bone ribeye ham prosciutto bresaola.
-
-Pancetta flank sirloin pork
-:   short ribs shankle prosciutto landjaeger. Beef ribs turkey shoulder drumstick. Leberkas pork belly ribeye, bresaola jerky strip steak tenderloin bacon landjaeger short ribs beef ribs. Flank pork chop fatback tail kielbasa filet mignon jowl landjaeger bresaola tongue corned beef biltong.
-:   Landjaeger spare ribs fatback corned beef tenderloin drumstick, swine chicken beef turkey biltong doner tri-tip filet mignon. 
-
-
-### &lt;a&gt;
-[Links][2] make the web exceptional.
-
-
-### &lt;em&gt;
-Let's *emphasize* how important responsive webdesign is.
-
-
-
-### &lt;strong&gt;
-This looks like **bold** text.
-
-
-
-### &lt;small&gt;
-<small>This is small text.</small>
-
-
-
-### &lt;s&gt;
-
-It's nice getting things done. Just strike through <s>finished tasks</s>.
-
-
-
-### &lt;cite&gt;
-
-<cite>Albert Einstein</cite>
-
-
-
-### &lt;q&gt;
-
-If you use &lt;q&gt; your text gets <q>automagically quotes around the text passage</q>.
-
-
-
-### &lt;dfn&gt;
-
-The &lt;dfn&gt; tag is a phrase tag. It defines a <dfn>definition term</dfn>.
-
-
-
-### &lt;abbr&gt;
-
-The <abbr title="World Health Organization">WHO</abbr> was founded in 1948.
-
-
-
-### &lt;time&gt;
-
-The concert took place on <time datetime="2001-05-15 19:00">May 15</time>.
-
-
-### &lt;code&gt;
-
-Some `code: lucida console` displayed.
-
-
-
-### &lt;var&gt;
-
-The &lt;var&gt; tag is a phrase tag. It defines a <var>variable</var>.
-
-
-
-### &lt;samp&gt;
-
-Text surrounded by &lt;samp&gt; <samp>looks like this in monospace</samp>.
-
-
-
-### &lt;kbd&gt;
-
-Copycats enjoy pressing <kbd>CMD</kbd> + <kbd>c</kbd> and <kbd>CMD</kbd> + <kbd>v</kbd>.
-
-
-
-### &lt;sub&gt;
-
-This text <sub>lays low</sub> and chills a bit.
-
-
-### &lt;sup&gt;
-
-This text <sup>gets high</sup> above the clouds.
-
-
-
-### &lt;i&gt;
-
-This looks <i>italic</i>.
-
-
-
-### &lt;b&gt;
-
-This looks <b>bold</b>, too.
-
-
-
-### &lt;u&gt;
-
-<div><p><u>Underlining</u> content for emphasize is not the best choice. You can't read it so well.</p></div>
-
-
-
-### &lt;mark&gt;
-Let's <mark>mark this hint</mark> to give you a clue.
-
-
-
-
-### &lt;br&gt;
-
-Need a break? I give you three!<br><br><br>
-
-
- [1]: https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/HTML5/HTML5_element_list
- [2]: http://phlow.de/
- [3]: http://en.wikipedia.org/wiki/Ed_Benguiat
- [4]: https://www.google.com/fonts/specimen/Lato
- [5]: https://www.google.com/fonts/specimen/Volkhov
- [6]: http://www.latofonts.com/
- [7]: http://modularscale.com/
- [8]: #
- [9]: #
- [10]: #
-
-
-# &lt;h1&gt;-Heading in Volkhov
-
-## &lt;h2&gt;-Heading in Volkhov
-
-### &lt;h3&gt;-Heading in Volkhov
-
-#### &lt;h4&gt;-Heading in Volkhov
-
-##### &lt;h5&gt;-Heading in Volkhov
-
-##### &lt;h6&gt;-Heading in Volkhov
-
-
-## Tables
-
-Even tables are responsive thanks to foundation. A table can consist of these elements.
-
-<table>
-  <caption>&lt;table&gt; defines an HTML table</caption>
-  <colgroup>
-    <col span="1" style="width: 15%;"></col>
-    <col span="1" style="width: 50%;"></col>
-    <col span="1" style="width: 35%;"></col>
-  </colgroup>
-  <thead>
-    <tr>
-      <th>HTML Tag</th>
-      <th>Defintion</th>
-      <th>Style</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>&lt;caption&gt;</td>
-      <td>defines a table caption</td>
-      <td><code>font-weight: bold;</code></td>
-    </tr>
-    <tr>
-      <td>&lt;colgroup&gt;</td>
-      <td>specifies a group of one or more columns in a table for 
-formatting. The &lt;colgroup&gt; tag is useful for applying styles to entire columns, instead of repeating the styles for each cell, for each row.</td>
-      <td>no styling needed</td>
-    </tr>
-    <tr>
-      <td>&lt;col&gt;</td>
-      <td>specifies column properties for each column within a `&lt;colgroup&gt;` 
-element</td>
-      <td>no styling needed</td>
-    </tr>
-    <tr>
-      <td>&lt;thead&gt;</td>
-      <td>is used to group header content in an HTML table</td>
-      <td><code>font-weight: bold;</code></td>
-    </tr>
-    <tr>
-      <td>&lt;tbody&gt;</td>
-      <td>is used to group the body content in an HTML table</td>
-      <td>no styling needed</td>
-    </tr>
-    <tr>
-      <td>&lt;tr&gt;</td>
-      <td>defines a row in an HTML table</td>
-      <td>no styling needed</td>
-    </tr>
-    <tr>
-      <td>&lt;th&gt;</td>
-      <td>defines a header cell in an HTML table</td>
-      <td><code>font-weight: bold;</code></td>
-    </tr>
-    <tr>
-      <td>&lt;td&gt;</td>
-      <td>defines a standard cell in an HTML table</td>
-      <td><code>font-weight: normal;</code></td>
-    </tr>
-    <tr>
-      <td>&lt;tfoot&gt;</td>
-      <td>is used to group footer content in an HTML table</td>
-      <td>no styling needed</td>
-    </tr>
-</table>
-
-
+Il MM era utilizzato in modo molto specifico.
 
 
 
