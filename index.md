@@ -10,12 +10,12 @@ header:
    image_fullwidth: "lago_braies_croda_becco_1024x768.png"
 widget-1:
     title: "Blog & News"
-    url: 'http://localhost:4000/blog/'
+    url: 'http://nicolarossi.github.io/blog/'
     text: '<em>A news aggregation and my articles on ICT stuff:</em></br>Every news to be retained interesting to me is analysed and discussed.'
     image: blank_page-302x201.png
 widget-2:
     title: "Career portfolio"
-    url: 'http://localhost:4000/cv/whoami'
+    url: 'http://nicolarossi.github.io/cv/whoami'
     text: '<em>Professional presentation:</em></br> An extensive personal presentation useful to Human-Resource dept staff looking a genius :)'
     image: street-302x227.png
 widget-3:
