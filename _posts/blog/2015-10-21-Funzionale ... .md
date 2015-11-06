@@ -4,7 +4,10 @@ title: " C++ ed espressioni λ"
 subheadline: "C++ come linguaggio funzionale"
 meta_teaser: "Come il C++11,C++14 sono un linguaggi funzionali ..."
 teaser: "Come il C++11,C++14 sono un linguaggi funzionali ..."
-header: no
+header:
+    image: arrow.jpg
+    caption: Image by Matthew Smith
+    caption_url: "https://unsplash.com/whale"
 image:
     thumb:  arrow_thumb.jpg
     homepage: arrow.jpg
