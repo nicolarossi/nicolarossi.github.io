@@ -1,6 +1,6 @@
 ---
 layout: page-fullwidth
-title: "Elementare watson"
+title: "Elementare Watson"
 subheadline: "Deduzione dei tipi"
 meta_teaser: "Come il C++14 deduce i tipi nei template ..."
 teaser: "Come il C++14 deduce i tipi nei template ..."
@@ -15,6 +15,8 @@ image:
     caption: Image by Andrew Welch
     caption_url: "https://unsplash.com/andrewwelch3"
 categories:
+    - Programming
+tags:
     - Programming
 ---
 <div class="row">
