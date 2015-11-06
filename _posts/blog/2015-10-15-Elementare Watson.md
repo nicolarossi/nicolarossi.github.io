@@ -16,8 +16,6 @@ image:
     caption_url: "https://unsplash.com/andrewwelch3"
 categories:
     - Programming
-tags:
-    - Programming
 ---
 <div class="row">
 <div class="medium-4 medium-push-8 columns" markdown="1">
