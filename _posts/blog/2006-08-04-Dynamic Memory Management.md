@@ -4,7 +4,11 @@ title: "DIY memory management"
 subheadline: "Memory management"
 meta_teaser: "Faster dynamic memory manager created to increase speed in a chess engine"
 teaser: "<em>Faster dynamic memory manager</em> created to increase speed in a chess engine"
-header: no
+header: 
+  image:  bicycle.jpg
+    background-color: "#0183c4"
+    caption: Image by David Marcu
+    caption_url: "https://unsplash.com/davidmarcu"
 image:
     thumb:  bicycle_thumb.jpg
     homepage: bicycle.jpg

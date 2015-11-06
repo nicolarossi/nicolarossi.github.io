@@ -4,11 +4,10 @@ title: "Elementare Watson"
 subheadline: "Deduzione dei tipi"
 meta_teaser: "Come il C++14 e più in generale il C++ deduce i tipi nei template ..."
 teaser: "Come il C++14 e più in generale il C++ deduce i tipi nei template ..."
-header: no
 header: 
-    image_fullwidth: view_clouds_from_mountain.jpg
-    caption:  Image by Joshua Earle
-    caption_url:https://unsplash.com/joshuaearle
+    image_fullwidth: pipe_smoker_band.jpg
+    caption:  Image by Andrew Welch
+    caption_url:https://unsplash.com/andrewwelch3
 image:
     thumb:  pipe_smoker_band_thumb.jpg
     homepage: pipe_smoker_band.jpg
