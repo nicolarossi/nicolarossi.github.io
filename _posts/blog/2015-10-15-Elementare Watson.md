@@ -5,6 +5,10 @@ subheadline: "Deduzione dei tipi"
 meta_teaser: "Come il C++14 e più in generale il C++ deduce i tipi nei template ..."
 teaser: "Come il C++14 e più in generale il C++ deduce i tipi nei template ..."
 header: no
+header: 
+    image_fullwidth: view_clouds_from_mountain.jpg
+    caption:  Image by Joshua Earle
+    caption_url:https://unsplash.com/joshuaearle
 image:
     thumb:  pipe_smoker_band_thumb.jpg
     homepage: pipe_smoker_band.jpg
@@ -318,7 +322,7 @@ std::__cxx11::basic_string&lt;char, std::char_traits&lt;char>, std::allocator&lt
 )
 </pre>
 
-ossia <b>string</b> è un template di template.
+ossia <code>string</code> è un template di template.
 
 ----
 
