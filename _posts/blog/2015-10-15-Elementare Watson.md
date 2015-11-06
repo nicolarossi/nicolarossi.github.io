@@ -163,13 +163,13 @@ cout &lt;&lt; arraySize(x)&lt;&lt;"\n";
 }
 </pre>
 
-Quindi tramite l'operatore  T (&amp;)[N] abbiamo estratto il tipo T e la cardinalità N dalla dichiarazione ed infatti:
+Quindi tramite l'operatore  <code>T (&amp;)[N]</code> abbiamo estratto il tipo T e la cardinalità N dalla dichiarazione, ed infatti:
 
 <pre>
 unsigned long arraySize&lt;char, 5ul>(char (&) [5ul])
 </pre>
 
-unsigned long perchè size_t viene implementato con tale tipo.
+troviamo <code>unsigned long</code> perchè <code>size_t</code> viene implementato con tale tipo.
 
 La deduzione dei valori N nei template permette di costruire anche strutture in modo ricorsivo.
 
@@ -192,11 +192,11 @@ int main(){
 </pre>
 
 Un'osservazione dovrebbe nascere; perchè quando il compilatore deve risolvere 
-<pre>fattoriale&lt;0>::val</pre>
+<code>fattoriale&lt;0>::val</code>
  non cerca di istanziare ancora la prima dichiarazione di template?
 
-Perchè l'istanza del template <pre>fattoriale&lt;0></pre> 
-è stata fatta prima della deduzione di <pre>fattoriale&lt;1>::val</pre> .
+Perchè l'istanza del template <code>fattoriale&lt;0></code> 
+è stata fatta prima della deduzione di <code>fattoriale&lt;1>::val</code> .
 
 # Argomenti dei template
 
