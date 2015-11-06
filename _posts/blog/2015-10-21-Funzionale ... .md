@@ -84,7 +84,7 @@ Dal C++11 è stato inserito l'espressioni lamda e le funzioni anonime .
     cout << f(2) << endl;
 </pre>
 
-Abbiamo definito una funzione, che si chiama f, che và dagli int agli int o meglio abbiamo quella f nell'espressione f:ℕ → ℕ  .
+Abbiamo definito una funzione, che si chiama f, che và dagli <code>int</code> agli <code>int</code> o meglio abbiamo quella <b>f</b> nell'espressione <b>f:</b>ℕ → ℕ  .
 
 Arricchiamo la nostra funzione e diciamo che:
 
@@ -95,7 +95,7 @@ auto f = [](int x){
 } ;
 </pre>
 
-Questa funzione non è più side-effect perchè modifica l'oggetto std::cout e quindi lo stato in cui è eseguito.
+Questa funzione non è più [side-effect] [] perchè modifica l'oggetto <code>std::cout</code> e quindi lo stato in cui è eseguito.
 
 Se guardiamo il binario generato e l'assembly (richiamandola funzione per ) che vediamo?
 
@@ -110,13 +110,15 @@ Se guardiamo il binario generato e l'assembly (richiamandola funzione per ) che 
 </pre>	
 	
 Quindi :
-- metti 2 in %esi 
-- metti funzione in %edi
-
-e richiama la funzione 	_ZNKUliE_clEi per gli amici:
+<ul>
+<li> metti 2 in %esi </li>
+<li> metti funzione in %edi</li>
+</ul>
+e richiama la funzione 	<code>_ZNKUliE_clEi</code> per gli amici:
 <pre>
 	{lambda(int)#1}::operator()(int) const
 </pre>
+
 o più semplicemente :
 <pre>
 	<lambda(int)>::operator() (&funzione, 1)
@@ -127,7 +129,7 @@ In LISP è stato scritto il primo linguaggio ad auto-compilare se stesso, sbirci
 
 [1] https://en.wikipedia.org/wiki/Automated_theorem_proving
 [2] ftp://publications.ai.mit.edu/ai-publications/pdf/AIM-039.pdf
-
+[3] https://it.wikipedia.org/wiki/Effetto_collaterale_%28informatica%29
 
 </div><!-- /.medium-8.columns -->
 </div><!-- /.row -->
