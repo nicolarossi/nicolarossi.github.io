@@ -1,6 +1,6 @@
 ---
 layout: page-fullwidth
-title: "Elementare Watson"
+title: "Elementare Watson ...."
 subheadline: "Deduzione dei tipi"
 meta_teaser: "Come il C++14 deduce i tipi nei template ..."
 teaser: "Come il C++14 deduce i tipi nei template ..."
