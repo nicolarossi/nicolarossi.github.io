@@ -7,7 +7,7 @@
 layout: frontpage
 title: "Nicola Rossi – Blog"
 header:
-   image_fullwidth: "lago_braies_croda_becco_1600x503.png"
+   image_fullwidth: "lago_braies_croda_becco_1024x768.png"
 widget-1:
     title: "Blog & News"
     url: 'http://localhost:4000/blog/'
