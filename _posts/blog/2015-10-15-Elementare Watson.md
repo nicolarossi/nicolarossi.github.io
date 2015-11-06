@@ -79,7 +79,7 @@ Compiliamo e sbirciamo:
 [root@localhost template]#
 </pre>
 
-Il risultato della compilazione è stato quindi la creazione di 3 funzioni che prendono tipi diversi, per l'appunto <b>T const&</b>.
+Il risultato della compilazione è stato quindi la creazione di 3 funzioni che prendono tipi diversi, per l'appunto <b>T const&amp;</b>.
 
 <pre>
 [root@localhost template]# c++filt -n _Z3MaxIiERKT_S2_S2_ _Z3MaxIdERKT_S2_S2_
@@ -98,7 +98,7 @@ using namespace std;
 template<typename T>
 void funzione(T&& param)
 {
-    cout&lt;&lt; param &lt;&lt;"\n";    
+    cout&lt;&lt; param &lt;&lt;"\n";
 };	// param ora è un riferimento universale
 
 int main(){
