@@ -29,7 +29,7 @@ categories:
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
-##  Espressionia λ e linguaggio funzionale
+##  Espressioni λ e linguaggio funzionale
 
 >  <span class="teaser">In informatica si dice che una funzione produce un effetto collaterale quando modifica un valore o uno stato al di fuori del proprio scoping locale.</span>
 <cite> https://it.wikipedia.org/wiki/Effetto_collaterale_(informatica)</cite>
