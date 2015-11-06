@@ -5,7 +5,7 @@ subheadline: "Deduzione dei tipi"
 meta_teaser: "Come il C++14 e più in generale il C++ deduce i tipi nei template ..."
 teaser: "Come il C++14 e più in generale il C++ deduce i tipi nei template ..."
 header: 
-    image_fullwidth: pipe_smoker_band.jpg
+    image: pipe_smoker_band.jpg
     caption:  Image by Andrew Welch
     caption_url:https://unsplash.com/andrewwelch3
 image:
