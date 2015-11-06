@@ -82,7 +82,7 @@ Compiliamo e sbirciamo:
 
 Il risultato della compilazione è stato quindi la creazione di 3 funzioni che prendono tipi diversi, per l'appunto <code>T const&amp; </code>.
 
-A
+
 <pre>
 [root@localhost template]# c++filt -n _Z3MaxIiERKT_S2_S2_ _Z3MaxIdERKT_S2_S2_
 int const& Max&lt;int>(int const&, int const&)
@@ -130,13 +130,13 @@ void funzione&lt;int const&>(int const&)
 void funzione&lt;int>(int&&)
 </pre>
 
-Prima osservazione : abbiamo istanziato 3 simboli, perchè <pre>funzione(cx)</pre> ed <pre>funzione(rx)</pre> vengono "mappati" tramite 
-<pre>void funzione&lt;int&>(const int)</pre>
+<b>Prima osservazione:</b> abbiamo istanziato 3 simboli, perchè <code>funzione(cx)</code> ed <code>funzione(rx)</code> vengono "mappati" tramite 
+<code>void funzione&lt;int&>(const int)</code>
 
-Seconda osservazione: in C++98 non esistevano i template sugli rvalue ma avremmo dovuto usare un template tipo:
+<b>Seconda osservazione:</b> in C++98 non esistevano i template sugli <code>rvalue</code> ma avremmo dovuto usare un template tipo:
 
 <pre>
-template<typename T>
+template&lt;typename T>
 void funzione(T const & param)
 </pre>
 
@@ -150,7 +150,7 @@ void funzione&lt;int>(int const&)
 La differenza tra un array e un puntatore è che il primo ha un contenuto informativo maggiore, il numero di elementi dell'array.
 
 <pre>
-template <typename T, std::size_t N>
+template &lt;typename T, std::size_t N>
  std::size_t arraySize(T (&)[N])
 {
 return N;	
@@ -166,7 +166,7 @@ cout &lt;&lt; arraySize(x)&lt;&lt;"\n";
 Quindi tramite l'operatore  T (&amp;)[N] abbiamo estratto il tipo T e la cardinalità N dalla dichiarazione ed infatti:
 
 <pre>
-unsigned long arraySize<char, 5ul>(char (&) [5ul])
+unsigned long arraySize&lt;char, 5ul>(char (&) [5ul])
 </pre>
 
 unsigned long perchè size_t viene implementato con tale tipo.
@@ -174,20 +174,20 @@ unsigned long perchè size_t viene implementato con tale tipo.
 La deduzione dei valori N nei template permette di costruire anche strutture in modo ricorsivo.
 
 <pre>
-// Stiamo definendo la struttura fattoriale<N>
+// Stiamo definendo la struttura fattoriale&lt;N>
 template &lt;int N> 
 struct fattoriale {
   static const int val = N * fattoriale<N - 1>::val;
 };
 
-// Definiaimo fattoriale<0>
+// Definiaimo fattoriale&lt;0>
 template <>
-struct fattoriale<0> {
+struct fattoriale&lt;0> {
   static const int val = 1;
 };
 
 int main(){
- std::cout &lt;&lt; fattoriale<3>::val&lt;&lt;"\n"; 
+ std::cout &lt;&lt; fattoriale&lt;3>::val&lt;&lt;"\n"; 
 }
 </pre>
 
@@ -208,7 +208,7 @@ dal C++11 si può definire anche una lista <i>variadic</i> di parametri detta [p
 
 Ci sono però delle eccezioni.
 <pre>
-template<const char *V>
+template&lt;const char *V>
 void funzione(){
     std::cout&lt;&lt;V&lt;&lt;"\n";
 }
@@ -224,7 +224,7 @@ main.cpp:10:21: error: no matching function for call to 'funzione()'
    funzione<"Hello">();
 
                      ^
-main.cpp:5:6: note: candidate: template<const char* V> void funzione()
+main.cpp:5:6: note: candidate: template&lt;const char* V> void funzione()
 
  void funzione(){
 
@@ -274,19 +274,20 @@ int main(){
 ci permette di definire delle abbreviazioni per il template 
 
 <pre>
-template<class T> struct Alloc {};
-template<class T> using Vec = vector<T, Alloc<T>>; // tipo è un modo abbreviato per riferirsi al template vector<T, Alloc<T>>
-Vec<int> v; // Stiamo in realtà definendo: vector<int, Alloc<int>> v
+template&lt;class T> struct Alloc {};
+template&lt;class T> using Vec = vector&lt;T, Alloc&lt;T>>; // tipo è un modo abbreviato per riferirsi al template vector&lt;T, Alloc&lt;T>>
+Vec&lt;int> v; // Stiamo in realtà definendo: vector&lt;int, Alloc&lt;int>> v
 </pre>
 
 riprendiamo
-<pre>
-#include <iostream>
 
-template<typename T>  
+<pre>
+#include &lt;iostream>
+
+template&lt;typename T>  
  T const& Max (T const& a, T const& b) 
 {
- return ( a < b ? b : a)   ;
+ return ( a &lt; b ? b : a)   ;
 }
 
 int main(){ 
@@ -300,11 +301,11 @@ il simbolo generato è :
 <pre>
 _Z3MaxINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_S6_S6_
 
-std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const& 
-Max<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > >
+std::__cxx11::basic_string&lt;char, std::char_traits&lt;char>, std::allocator&lt;char> > const& 
+Max<std::__cxx11::basic_string<char, std::char_traits&lt;char>, std::allocator&lt;char> > >
 (
-std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, 
-std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&
+std::__cxx11::basic_string&lt;char, std::char_traits&lt;char>, std::allocator&lt;char> > const&, 
+std::__cxx11::basic_string&lt;char, std::char_traits&lt;char>, std::allocator&lt;char> > const&
 )
 </pre>
 
