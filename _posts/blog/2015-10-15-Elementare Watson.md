@@ -37,18 +37,18 @@ Come avevamo detto la scorsa puntata, la tipizzazione è un affare serio; da gra
 Come sappiamo un costrutto del C++ sono i template (similari in Java ai <i>Generic Class</i>).
 
 
-<code>
+<pre>
 template &lt;typename T&gt; <br>
 inline T const& Max (T const& a, T const& b) 
 { 
     return a &lt; b ? b:a; 
 } 
-</code>
+</pre>
 
 La semantica è ovvia, la "[pragmatica]" [1] un'pò meno.
 Proviamo ad usare il template di cui sopra in un software come il seguente.
 
-<code>
+<pre>
 ...
 int main ()
 {
@@ -66,32 +66,32 @@ int main ()
 	
 	return 0;
 }
-</code>
+</pre>
 
 Compiliamo e sbirciamo:
 
-<code>
+<pre>
 [root@localhost template]# g++ prova.cpp
 [root@localhost template]# nm a.out |grep Max
 08048ba2 W _Z3MaxINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEERKT_S8_S8_
 08048b58 W _Z3MaxIdERKT_S2_S2_
 08048b30 W _Z3MaxIiERKT_S2_S2_
 [root@localhost template]#
-</code>
+</pre>
 
 Il risultato della compilazione è stato quindi la creazione di 3 funzioni che prendono tipi diversi, per l'appunto <b>T const&</b>.
 
-<code>
+<pre>
 [root@localhost template]# c++filt -n _Z3MaxIiERKT_S2_S2_ _Z3MaxIdERKT_S2_S2_
 int const& Max<int>(int const&, int const&)
 double const& Max<double>(double const&, double const&)
-</code>
+</pre>
 
 Evitiamo per semplicità, il reverse engineering del template quando T è di tipo string lo riprenderemo in fondo al post.
 
 In C++11 sono stati aggiunti i template sugli rvalue.
 
-<code>
+<pre>
 #include <iostream>
 
 using namespace std;
@@ -115,9 +115,9 @@ funzione(rx);	// rx è un lvalue, pertanto T è const int&, anche il tipo di par
 funzione(27);	// 27 è un rvalue, pertanto T è int, quindi il tipo di param è int&&
 
 }
-</code>
+</pre>
 che istanzia a compile-time i simboli :
-<code>
+<pre>
 ....
 ... W _Z8funzioneIRiEvOT_
 ... W _Z8funzioneIRKiEvOT_
@@ -126,31 +126,31 @@ che istanzia a compile-time i simboli :
 void funzione<int&>(int&)
 void funzione<int const&>(int const&)
 void funzione<int>(int&&)
-</code>
+</pre>
 
-Prima osservazione : abbiamo istanziato 3 simboli, perchè <code>funzione(cx)</code> ed <code>funzione(rx)</code> vengono "mappati" tramite 
-<code>void funzione<int&>(const int)
+Prima osservazione : abbiamo istanziato 3 simboli, perchè <pre>funzione(cx)</pre> ed <pre>funzione(rx)</pre> vengono "mappati" tramite 
+<pre>void funzione<int&>(const int)</pre>
 
 Seconda osservazione: in C++98 non esistevano i template sugli rvalue ma avremmo dovuto usare un template tipo:
 
-<code>
+<pre>
 template<typename T>
 void funzione(T const & param)
-</code>
+</pre>
 
 il codice era compilabile e avremmo istanziato 1 solo simbolo di "tipo":
-<code>
+<pre>
 void funzione<int>(int const&)
-</code>
+</pre>
 
 # Array o puntatori
 
 La differenza tra un array e un puntatore è che il primo ha un contenuto informativo maggiore, il numero di elementi dell'array.
 
-<code>
-template<typename T, std::size_t N>
- std::size_t arraySize(T (&)[N])  
-{	            
+<pre>
+template <typename T, std::size_t N>
+ std::size_t arraySize(T (&)[N])
+{
 return N;	
 }	
 
@@ -159,18 +159,19 @@ char x[] = {2,3,5,7,11};
 cout &lt;&lt; arraySize(x)&lt;&lt;"\n";
 
 }
-</code>
+</pre>
 
 Quindi tramite l'operatore  T (&)[N] abbiamo estratto il tipo T e la cardinalità N dalla dichiarazione ed infatti:
-<code>
+
+<pre>
 unsigned long arraySize<char, 5ul>(char (&) [5ul])
-</code>
+</pre>
 
 unsigned long perchè size_t viene implementato con tale tipo.
 
 La deduzione dei valori N nei template permette di costruire anche strutture in modo ricorsivo.
 
-<code>
+<pre>
 // Stiamo definendo la struttura fattoriale<N>
 template <int N> 
 struct fattoriale {
@@ -186,7 +187,7 @@ struct fattoriale<0> {
 int main(){
  std::cout &lt;&lt; fattoriale<3>::val&lt;&lt;"\n"; 
 }
-</code>
+</pre>
 
 Un'osservazione dovrebbe nascere; perchè quando il compilatore deve risolvere fattoriale<0>::val non cerca di istanziare ancora la prima dichiarazione di template?
 Perchè l'istanza del template fattoriale<0> è stata fatta a monte prima della deduzione di fattoriale<1>::val .
@@ -204,7 +205,7 @@ Altri "tipi" di parametri possono essere:
 dal C++11 si può definire anche una lista <i>variadic</i> di parametri detta [parameter pack][2] .
 
 Ci sono però delle eccezioni.
-<code>
+<pre>
 template<const char *V>
 void funzione(){
     std::cout&lt;&lt;V&lt;&lt;"\n";
@@ -231,7 +232,7 @@ main.cpp:5:6: note:   template argument deduction/substitution failed:
 main.cpp:10:21: error: '"Hello"' is not a valid template argument for type 'const char*' because string literals can never be used in this context
 
    funzione<"Hello">();
-</code>
+</pre>
 
 <em>because string literals can never be used in this context</em>
 il messaggio è chiaro ed esplicito.
@@ -246,7 +247,7 @@ Altri vincoli sui parametri di un template non di tipo è che non siano:
 
 # Template di template
 
-<code>
+<pre>
 #include <iostream>
 
 template<typename T> 
@@ -260,7 +261,7 @@ int main(){
   B<B<int>> b ;  
   b.x.print();  
 }
-</code>
+</pre>
 
 # Alias di template 
 
@@ -270,14 +271,14 @@ int main(){
 
 ci permette di definire delle abbreviazioni per il template 
 
-<code>
+<pre>
 template<class T> struct Alloc {};
 template<class T> using Vec = vector<T, Alloc<T>>; // tipo è un modo abbreviato per riferirsi al template vector<T, Alloc<T>>
 Vec<int> v; // Stiamo in realtà definendo: vector<int, Alloc<int>> v
-</code>
+</pre>
 
 riprendiamo
-<code>
+<pre>
 #include <iostream>
 
 template<typename T>  
@@ -291,10 +292,10 @@ int main(){
     string s2 = "World"; 
     cout &lt;&lt; "Max(s1, s2): " &lt;&lt; Max(s1, s2) &lt;&lt; endl;   
 }
-</code>
+</pre>
 
 il simbolo generato è :
-<code>
+<pre>
 _Z3MaxINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_S6_S6_
 
 std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const& 
@@ -303,7 +304,7 @@ Max<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char
 std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&, 
 std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > const&
 )
-</code>
+</pre>
 
 [1] https://it.wikipedia.org/wiki/Pragmatica
 [2] http://en.cppreference.com/w/cpp/language/parameter_pack
