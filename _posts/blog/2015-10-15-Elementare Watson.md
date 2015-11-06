@@ -30,15 +30,15 @@ categories:
 > <span class="teaser">Da un grande potere derivano grandi responsabilità
 </span><cite> Spiderman </cite>
 
-Come avevamo detto la scorsa puntata, la tipizzazione è un affare serio; da grande robustezza al linguaggio ma da anche svantaggi, per questo vedo una presa di responsabilità necessaria ad ogni buon sw developer, capire con quali regole funziona il compilatore quando fà del lavoro al posto nostro.
+Come avevamo detto la scorsa puntata, la tipizzazione è un affare serio; dà grande robustezza al linguaggio ma dà anche svantaggi, per questo vedo una presa di responsabilità necessaria ad ogni buon sw developer, capire con quali regole funziona il compilatore quando fà del lavoro al posto nostro.
 
 # ... nei template
 
-Come sappiamo un costrutto del C++ sono i template (similari in Java ai <i>Generic Class</i>).
+Come sappiamo un costrutto molto potente del C++ è i template, similare ai <i>Generic Class</i> del Java.
 
 
 <pre>
-template &lt;typename T&gt; <br>
+template &lt;typename T&gt; 
 inline T const& Max (T const& a, T const& b) 
 { 
     return a &lt; b ? b:a; 
@@ -306,8 +306,8 @@ std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > 
 )
 </pre>
 
-[1] https://it.wikipedia.org/wiki/Pragmatica
-[2] http://en.cppreference.com/w/cpp/language/parameter_pack
+[1]: https://it.wikipedia.org/wiki/Pragmatica
+[2]: http://en.cppreference.com/w/cpp/language/parameter_pack
  
 </div><!-- /.medium-8.columns -->
 </div><!-- /.row -->
