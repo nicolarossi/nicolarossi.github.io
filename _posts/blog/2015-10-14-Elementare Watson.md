@@ -6,9 +6,8 @@ meta_teaser: "Come il C++14 deduce i tipi nei template ..."
 teaser: "Come il C++14 deduce i tipi nei template ..."
 header: 
     image: pipe_smoker_band.jpg
-    background-color: "#262930"
     caption: Image by Andrew Welch
-    caption_url:https://unsplash.com/andrewwelch3
+    caption_url: https://unsplash.com/andrewwelch3
 image:
     thumb:  pipe_smoker_band_thumb.jpg
     homepage: pipe_smoker_band.jpg
@@ -17,6 +16,7 @@ image:
 categories:
     - Programming
 ---
+
 <div class="row">
 <div class="medium-4 medium-push-8 columns" markdown="1">
 <div class="panel radius" markdown="1">
