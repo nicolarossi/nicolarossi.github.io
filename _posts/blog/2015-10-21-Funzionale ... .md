@@ -8,7 +8,7 @@ header:
     image: arrow.jpg
     background-color: "#262930"
     caption: Image by Matthew Smith
-    caption_url: "https://unsplash.com/whale"
+    caption_url: https://unsplash.com/whale
 image:
     thumb:  arrow_thumb.jpg
     homepage: arrow.jpg
@@ -29,7 +29,7 @@ categories:
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
-##  Espressioni λ e linguaggio funzionale
+##  Espressionia λ e linguaggio funzionale
 
 >  <span class="teaser">In informatica si dice che una funzione produce un effetto collaterale quando modifica un valore o uno stato al di fuori del proprio scoping locale.</span>
 <cite> https://it.wikipedia.org/wiki/Effetto_collaterale_(informatica)</cite>
