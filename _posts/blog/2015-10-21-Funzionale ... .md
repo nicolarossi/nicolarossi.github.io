@@ -31,29 +31,31 @@ categories:
 ##  Espressioni λ e linguaggio funzionale
 
 >  <span class="teaser">In informatica si dice che una funzione produce un effetto collaterale quando modifica un valore o uno stato al di fuori del proprio scoping locale.</span>
-<cite> https://it.wikipedia.org/wiki/Effetto_collaterale_%28informatica%29</cite>
+<cite> https://it.wikipedia.org/wiki/Effetto_collaterale_(informatica)</cite>
 
 Un linguaggio funzionale non è solo un linguaggio che ha una funzione tra i suoi tipi, altrimenti anche il C potrebbe essere tale, ma un linguaggio in cui le funzioni non hanno effetti collaterali.
+
 I linguaggi funzionali puri sono nati negli anni '50 dall'informatica teorica e dallo studio della correttezza formale dei programmi.
 
 I più famosi sono sicuramente LISP e Haskell, il primo è usato come interprete in emacs per i plugin e le estensioni; se sbirciate nel file <code>~/.emacs.d</code> troverete linguaggio LISP.
 
 Nei linguaggi funzionali esiste una ulteriore classificazione dovuta alla semantica dell'istanza del linguaggio.
 <ul>
-<el>Eager (o Call-by-value)</el>
-<el>Lazy  (o Call-by-name o Left-most o Call-by-need)</el>
+<li>Eager (o Call-by-value)</li>
+<li>Lazy  (o Call-by-name o Left-most o Call-by-need)</li>
 </ul>
 
-Come il nome suggerisce (Eager -> Impaziente , Lazy -> Pigro ) la differenza è nel momento della valutazione dei parametri delle funzioni.
+Come il nome suggerisce (Eager → Impaziente , Lazy → Pigro ) la differenza è nel momento della valutazione dei parametri delle funzioni.
 Semplificando nelle semantiche Lazy, i parametri vengono calcolati solo quando servono e questo cambia fortemente il comportamento di un programma.
 
 Esempio (scritto con errori in pseudo linguaggio λ ):
-<code>
+
+<pre>
 F=λx.1
 G=λg.λn.n*g(n-1)
 
 H=λf.λg.λx 
-</code>
+</pre>
 
 Abbiamo definito F come una funzione che prende x e torna sempre 1 .
 Abbiamo definito G come una funzione che prende n e torna il prodotto tra n e G' dove G' è una funzione che ... 
@@ -75,29 +77,29 @@ come qualcuno crede si possa fare visto che i linguaggi funzionali sono privi di
 
 Dal C++11 è stato inserito l'espressioni lamda e le funzioni anonime .
 
-<code>
+<pre>
     auto f= [](int x){return 2*x;} ; 
     
     cout << f(1) << endl;
     cout << f(2) << endl;
-</code>
+</pre>
 
 Abbiamo definito una funzione, che si chiama f, che và dagli int agli int o meglio abbiamo quella f nell'espressione f:ℕ → ℕ  .
 
 Arricchiamo la nostra funzione e diciamo che:
 
-<code>
+<pre>
 auto f = [](int x){
     cout << x << "\t" ;
     return 2*x;
 } ;
-</code>
+</pre>
 
 Questa funzione non è più side-effect perchè modifica l'oggetto std::cout e quindi lo stato in cui è eseguito.
 
 Se guardiamo il binario generato e l'assembly (richiamandola funzione per ) che vediamo?
 
-<code>
+<pre>
 0000000000600f15 b funzione
 ...
 	movl	$2, %esi
@@ -105,20 +107,20 @@ Se guardiamo il binario generato e l'assembly (richiamandola funzione per ) che 
 	call	_ZNKUliE_clEi
 ...	
  	
-</code>	
+</pre>	
 	
 Quindi :
 - metti 2 in %esi 
 - metti funzione in %edi
 
 e richiama la funzione 	_ZNKUliE_clEi per gli amici:
-<code>
+<pre>
 	{lambda(int)#1}::operator()(int) const
-</code>
+</pre>
 o più semplicemente :
-<code>
+<pre>
 	<lambda(int)>::operator() (&funzione, 1)
-</code>
+</pre>
 
 Curiosità:
 In LISP è stato scritto il primo linguaggio ad auto-compilare se stesso, sbirciate [questa][2].
