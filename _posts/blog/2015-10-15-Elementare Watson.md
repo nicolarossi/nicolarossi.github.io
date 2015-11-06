@@ -161,7 +161,7 @@ cout &lt;&lt; arraySize(x)&lt;&lt;"\n";
 }
 </pre>
 
-Quindi tramite l'operatore  T (&)[N] abbiamo estratto il tipo T e la cardinalità N dalla dichiarazione ed infatti:
+Quindi tramite l'operatore  T (&amp;)[N] abbiamo estratto il tipo T e la cardinalità N dalla dichiarazione ed infatti:
 
 <pre>
 unsigned long arraySize<char, 5ul>(char (&) [5ul])
