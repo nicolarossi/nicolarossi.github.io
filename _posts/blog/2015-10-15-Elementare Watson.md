@@ -28,7 +28,7 @@ categories:
 ##  Tipi ... croce e delizia
 
 > Da un grande potere derivano grandi responsabilità
-<cide> Spiderman 
+<cite> Spiderman 
 
 Come avevamo detto la scorsa puntata, la tipizzazione è un affare serio; da grande robustezza al linguaggio ma da anche svantaggi, per questo vedo una presa di responsabilità necessaria ad ogni buon sw developer, capire con quali regole funziona il compilatore quando fà del lavoro al posto nostro.
 
