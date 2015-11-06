@@ -27,6 +27,8 @@ categories:
 
 ##  Tipi ... croce e delizia
 
+Siamo 1
+
 > <span class="teaser">Da un grande potere derivano grandi responsabilità
 </span><cite> Spiderman </cite>
 
