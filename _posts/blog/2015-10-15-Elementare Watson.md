@@ -80,13 +80,13 @@ Compiliamo e sbirciamo:
 [root@localhost template]#
 </pre>
 
-Il risultato della compilazione è stato quindi la creazione di 3 funzioni che prendono tipi diversi, per l'appunto <b>T const&amp;</b>.
+Il risultato della compilazione è stato quindi la creazione di 3 funzioni che prendono tipi diversi, per l'appunto <code>T const&amp; </code>.
 
 A
 <pre>
 [root@localhost template]# c++filt -n _Z3MaxIiERKT_S2_S2_ _Z3MaxIdERKT_S2_S2_
-int const& Max<int>(int const&, int const&)
-double const& Max<double>(double const&, double const&)
+int const& Max&lt;int>(int const&, int const&)
+double const& Max&lt;double>(double const&, double const&)
 </pre>
 
 Evitiamo per semplicità, il reverse engineering del template quando T è di tipo string lo riprenderemo in fondo al post.
@@ -94,10 +94,10 @@ Evitiamo per semplicità, il reverse engineering del template quando T è di tip
 In C++11 sono stati aggiunti i template sugli <code>rvalue</code>.
 
 <pre>
-#include <iostream>
+#include &lt;iostream>
 
 using namespace std;
-template<typename T>
+template&lt;typename T>
 void funzione(T&& param)
 {
     cout&lt;&lt; param &lt;&lt;"\n";
@@ -125,13 +125,13 @@ che istanzia a compile-time i simboli :
 ... W _Z8funzioneIRKiEvOT_
 ... W _Z8funzioneIiEvOT_
 ...
-void funzione<int&>(int&)
-void funzione<int const&>(int const&)
-void funzione<int>(int&&)
+void funzione&lt;int&>(int&)
+void funzione&lt;int const&>(int const&)
+void funzione&lt;int>(int&&)
 </pre>
 
 Prima osservazione : abbiamo istanziato 3 simboli, perchè <pre>funzione(cx)</pre> ed <pre>funzione(rx)</pre> vengono "mappati" tramite 
-<pre>void funzione<int&>(const int)</pre>
+<pre>void funzione&lt;int&>(const int)</pre>
 
 Seconda osservazione: in C++98 non esistevano i template sugli rvalue ma avremmo dovuto usare un template tipo:
 
@@ -142,7 +142,7 @@ void funzione(T const & param)
 
 il codice era compilabile e avremmo istanziato 1 solo simbolo di "tipo":
 <pre>
-void funzione<int>(int const&)
+void funzione&lt;int>(int const&)
 </pre>
 
 # Array o puntatori
@@ -175,7 +175,7 @@ La deduzione dei valori N nei template permette di costruire anche strutture in 
 
 <pre>
 // Stiamo definendo la struttura fattoriale<N>
-template <int N> 
+template &lt;int N> 
 struct fattoriale {
   static const int val = N * fattoriale<N - 1>::val;
 };
@@ -250,9 +250,9 @@ Altri vincoli sui parametri di un template non di tipo è che non siano:
 # Template di template
 
 <pre>
-#include <iostream>
+#include &lt;iostream>
 
-template<typename T> 
+template&lt;typename T> 
 class B{ 
     public:
     T x ;
@@ -260,7 +260,7 @@ class B{
 };
 
 int main(){
-  B<B<int>> b ;
+  B&lt;B&lt;int>> b ;
   b.x.print();
 }
 </pre>
