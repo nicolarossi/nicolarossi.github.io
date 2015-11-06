@@ -163,7 +163,7 @@ cout &lt;&lt; arraySize(x)&lt;&lt;"\n";
 }
 </pre>
 
-Quindi tramite l'operatore  <code>T (&amp;)[N]</code> abbiamo estratto il tipo T e la cardinalità N dalla dichiarazione, ed infatti:
+Quindi tramite l'operatore binario <code>T (&amp;)[N]</code> abbiamo "estratto" il tipo T e la cardinalità N dalla dichiarazione, ed infatti:
 
 <pre>
 unsigned long arraySize&lt;char, 5ul>(char (&) [5ul])
@@ -242,15 +242,16 @@ main.cpp:10:21: error: '"Hello"' is not a valid template argument for type 'cons
    funzione<"Hello">();
 </pre>
 
-<b><em>because string literals can never be used in this context</em><b>
+<b><em>because string literals can never be used in this context</em></b>
+
 il messaggio è chiaro ed esplicito.
 
-Altri vincoli sui parametri di un template non di tipo è che non siano:
+Altri vincoli sui parametri di un template non di tipo, è che non siano:
 <ul>
 <li> il risultato dell'operazione typeid</li>
 <li> un oggetto temporaneo</li>
 <li> un porzione componente di un oggetto (classe base, membri di classe etc) </li>
-<li> la variabile __func__ , che translittera in formato const char* il nome della funzione</li>
+<li> la variabile <code>__func__</code> , che traslittera in formato const char* il nome della funzione</li>
 </ul>
 
 # Template di template
@@ -274,11 +275,12 @@ int main(){
 # Alias di template 
 
 La sintassi
+
 <b>template &lt;</b><em>lista parametri template</em>
 <b>></b>
-<b>using</b> <em>identificatore</em> <b>=</b>  <em>tipo</em><b>;</b>
+<b>using</b> <em>identificatore</em> <b> = </b>  <em>tipo</em><b>;</b>
 
-ci permette di definire delle abbreviazioni per il template 
+ci permette di definire delle abbreviazioni per l'uso dei template.
 
 <pre>
 template&lt;class T> struct Alloc {};
@@ -286,7 +288,7 @@ template&lt;class T> using Vec = vector&lt;T, Alloc&lt;T>>; // tipo è un modo a
 Vec&lt;int> v; // Stiamo in realtà definendo: vector&lt;int, Alloc&lt;int>> v
 </pre>
 
-riprendiamo
+riprendiamo l'esempio di inizio post:
 
 <pre>
 #include &lt;iostream>
@@ -304,7 +306,7 @@ int main(){
 }
 </pre>
 
-il simbolo generato è :
+il simbolo generato dall'istanza del template sarà :
 <pre>
 _Z3MaxINSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEEET_S6_S6_
 
@@ -315,6 +317,10 @@ std::__cxx11::basic_string&lt;char, std::char_traits&lt;char>, std::allocator&lt
 std::__cxx11::basic_string&lt;char, std::char_traits&lt;char>, std::allocator&lt;char> > const&
 )
 </pre>
+
+ossia <b>string</b> è un template di template.
+
+----
 
 [1]: https://it.wikipedia.org/wiki/Pragmatica
 [2]: http://en.cppreference.com/w/cpp/language/parameter_pack
