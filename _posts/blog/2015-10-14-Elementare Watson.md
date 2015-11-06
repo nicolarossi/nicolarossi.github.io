@@ -14,8 +14,6 @@ image:
     homepage: pipe_smoker_band.jpg
     caption: Image by Andrew Welch
     caption_url: "https://unsplash.com/andrewwelch3"
-categories:
-    - Programming
 tags:
     - Programming
 ---
