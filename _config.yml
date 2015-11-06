@@ -36,7 +36,7 @@ improve_content: https://github.com/nicolarossi/nicolarossi.github.io/edit/gh-pa
 # Markdown-Example for posts ![Image Text]({{ site.urlimg }}/image.jpg)
 #
 #urlimg: "http://phlow.github.io/feeling-responsive/images/"
-urlimg: "images/"
+urlimg: "http://nicolarossi.github.io/images/"
 
 
 # Logo size is 600x80 pixels
