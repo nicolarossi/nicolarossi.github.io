@@ -3,7 +3,7 @@ layout: page-fullwidth
 title: "Elementare Watson"
 subheadline: "Deduzione dei tipi"
 meta_teaser: "Come il C++14 e più in generale il C++ deduce i tipi nei template ..."
-teaser: "Come il C++14 e più in generale il C++ deduce i tipi nei template ..."
+teaser: "Come il C++14 e piu in generale il C++ deduce i tipi nei template ..."
 header: 
     image: pipe_smoker_band.jpg
     caption:  Image by Andrew Welch
@@ -14,6 +14,8 @@ image:
     caption: Image by Andrew Welch
     caption_url: "https://unsplash.com/andrewwelch3"
 categories:
+    - Programming
+tags:
     - Programming
 ---
 <div class="row">
