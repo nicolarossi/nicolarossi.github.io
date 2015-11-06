@@ -6,6 +6,7 @@ meta_teaser: "Come il C++11,C++14 sono un linguaggi funzionali ..."
 teaser: "Come il C++11,C++14 sono un linguaggi funzionali ..."
 header:
     image: arrow.jpg
+    background-color: "#262930"
     caption: Image by Matthew Smith
     caption_url: "https://unsplash.com/whale"
 image:
