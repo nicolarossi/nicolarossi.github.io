@@ -69,9 +69,8 @@ Nella semantica Lazy non si tenterà di ridurre il parametro di F e quindi la fu
 
 A questo punto appare ovvio che i linguaggi funzionali moderni (Java-8, Scala, C++11 etc ...) NON sono di tipo Lazy .
 
-I linguaggi funzionali puri sono uno strumento per il [Theorem-proving][1] e nella creazione di modellazioni "sicure" ;
-ma nella attività di sviluppo, IMHO, non possono essere visti come la soluzione per impedire allo sviluppatore di scrivere errori;
-come qualcuno crede si possa fare visto che i linguaggi funzionali sono privi di <em>side-effect</em> by design .
+I linguaggi funzionali puri sono un potente strumento per il [Theorem-proving][1] e utili nella creazione di modellazioni "sicure" di sistemi mission-critical; 
+ma nella attività di sviluppo, IMHO, non possono essere visti come la soluzione per impedire allo sviluppatore di scrivere errori, come qualcuno crede si possa fare, visto che i linguaggi funzionali (puri) sono privi di <em>side-effect</em> by design .
 
 # Tornando al C++
 
@@ -84,7 +83,7 @@ Dal C++11 è stato inserito l'espressioni lamda e le funzioni anonime .
     cout << f(2) << endl;
 </pre>
 
-Abbiamo definito una funzione, che si chiama f, che và dagli <code>int</code> agli <code>int</code> o meglio abbiamo quella <b>f</b> nell'espressione <b>f:</b>ℕ → ℕ  .
+Abbiamo definito una funzione, che si chiama f, che và dagli <code>int</code> agli <code>int</code> o meglio una approssimazione di quella <b>f</b> nell'espressione <b>f:</b>ℕ → ℕ  .
 
 Arricchiamo la nostra funzione e diciamo che:
 
@@ -127,9 +126,9 @@ o più semplicemente :
 Curiosità:
 In LISP è stato scritto il primo linguaggio ad auto-compilare se stesso, sbirciate [questa][2].
 
-[1] https://en.wikipedia.org/wiki/Automated_theorem_proving
-[2] ftp://publications.ai.mit.edu/ai-publications/pdf/AIM-039.pdf
-[3] https://it.wikipedia.org/wiki/Effetto_collaterale_%28informatica%29
+[1]: https://en.wikipedia.org/wiki/Automated_theorem_proving
+[2]: ftp://publications.ai.mit.edu/ai-publications/pdf/AIM-039.pdf
+[3]: https://it.wikipedia.org/wiki/Effetto_collaterale_%28informatica%29
 
 </div><!-- /.medium-8.columns -->
 </div><!-- /.row -->
