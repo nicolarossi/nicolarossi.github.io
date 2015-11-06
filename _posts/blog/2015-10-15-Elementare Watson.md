@@ -27,7 +27,6 @@ categories:
 
 ##  Tipi ... croce e delizia
 
-Siamo 1
 
 > <span class="teaser">Da un grande potere derivano grandi responsabilità
 </span><cite> Spiderman </cite>
@@ -83,6 +82,7 @@ Compiliamo e sbirciamo:
 
 Il risultato della compilazione è stato quindi la creazione di 3 funzioni che prendono tipi diversi, per l'appunto <b>T const&amp;</b>.
 
+A
 <pre>
 [root@localhost template]# c++filt -n _Z3MaxIiERKT_S2_S2_ _Z3MaxIdERKT_S2_S2_
 int const& Max<int>(int const&, int const&)
@@ -91,7 +91,7 @@ double const& Max<double>(double const&, double const&)
 
 Evitiamo per semplicità, il reverse engineering del template quando T è di tipo string lo riprenderemo in fondo al post.
 
-In C++11 sono stati aggiunti i template sugli rvalue.
+In C++11 sono stati aggiunti i template sugli <code>rvalue</code>.
 
 <pre>
 #include <iostream>
@@ -259,9 +259,9 @@ class B{
     void print(){    std::cout &lt;&lt; "Hello\n"; } 
 };
 
-int main(){ 
-  B<B<int>> b ;  
-  b.x.print();  
+int main(){
+  B<B<int>> b ;
+  b.x.print();
 }
 </pre>
 
