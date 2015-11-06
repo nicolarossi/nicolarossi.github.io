@@ -189,8 +189,8 @@ int main(){
 }
 </pre>
 
-Un'osservazione dovrebbe nascere; perchè quando il compilatore deve risolvere fattoriale<0>::val non cerca di istanziare ancora la prima dichiarazione di template?
-Perchè l'istanza del template fattoriale<0> è stata fatta a monte prima della deduzione di fattoriale<1>::val .
+Un'osservazione dovrebbe nascere; perchè quando il compilatore deve risolvere <code>fattoriale&lt;0>::val</code> non cerca di istanziare ancora la prima dichiarazione di template?
+Perchè l'istanza del template <code>fattoriale&lt;0></code>è stata fatta a monte prima della deduzione di <code>fattoriale&lt;1>::val</code> .
 
 # Argomenti dei template
 
