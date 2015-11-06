@@ -323,7 +323,6 @@ std::__cxx11::basic_string&lt;char, std::char_traits&lt;char>, std::allocator&lt
 
 ossia <code>string</code> è un template di template.
 
-----
 
 [1]: https://it.wikipedia.org/wiki/Pragmatica
 [2]: http://en.cppreference.com/w/cpp/language/parameter_pack
