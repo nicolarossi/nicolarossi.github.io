@@ -34,9 +34,11 @@ Come avevamo detto la scorsa puntata, la tipizzazione è un affare serio; da gra
 
 # ... nei template
 
-Come sappiamo un costrutto del C++ sono i template (similari in Java ai <i>Generic Class</i>).<br>
+Come sappiamo un costrutto del C++ sono i template (similari in Java ai <i>Generic Class</i>).
+
+
 <code>
-template &lt;typename T&gt;
+template &lt;typename T&gt; <br>
 inline T const& Max (T const& a, T const& b) 
 { 
     return a &lt; b ? b:a; 
@@ -45,21 +47,22 @@ inline T const& Max (T const& a, T const& b)
 
 La semantica è ovvia, la "[pragmatica]" [1] un'pò meno.
 Proviamo ad usare il template di cui sopra in un software come il seguente.
+
 <code>
 ...
 int main ()
 {
     int i = 39;
     int j = 20;
-    cout << "Max(i, j): " << Max(i, j) << endl;
+    cout &lt;&lt; "Max(i, j): " &lt;&lt; Max(i, j) &lt;&lt; endl;
 
     double f1 = 13.5;
     double f2 = 20.7;
-    cout << "Max(f1, f2): " << Max(f1, f2) << endl;
+    cout &lt;&lt; "Max(f1, f2): " &lt;&lt; Max(f1, f2) &lt;&lt; endl;
 
     string s1 = "Hello"; 
     string s2 = "World"; 
-    cout << "Max(s1, s2): " << Max(s1, s2) << endl; 
+    cout &lt;&lt; "Max(s1, s2): " &lt;&lt; Max(s1, s2) &lt;&lt; endl; 
 	
 	return 0;
 }
@@ -95,7 +98,7 @@ using namespace std;
 template<typename T>
 void funzione(T&& param)
 {
-    cout<< param <<"\n";    
+    cout&lt;&lt; param &lt;&lt;"\n";    
 };	// param ora è un riferimento universale
 
 int main(){
@@ -153,7 +156,7 @@ return N;
 
 int main(){
 char x[] = {2,3,5,7,11};
-cout << arraySize(x)<<"\n";
+cout &lt;&lt; arraySize(x)&lt;&lt;"\n";
 
 }
 </code>
@@ -181,7 +184,7 @@ struct fattoriale<0> {
 };
 
 int main(){
- std::cout << fattoriale<3>::val<<"\n"; 
+ std::cout &lt;&lt; fattoriale<3>::val&lt;&lt;"\n"; 
 }
 </code>
 
@@ -204,7 +207,7 @@ Ci sono però delle eccezioni.
 <code>
 template<const char *V>
 void funzione(){
-    std::cout<<V<<"\n";
+    std::cout&lt;&lt;V&lt;&lt;"\n";
 }
 
 int main(){ 
@@ -250,7 +253,7 @@ template<typename T>
 class B{ 
     public:
     T x ;
-    void print(){    std::cout << "Hello\n"; } 
+    void print(){    std::cout &lt;&lt; "Hello\n"; } 
 };
 
 int main(){ 
@@ -261,7 +264,7 @@ int main(){
 
 # Alias di template 
 
-<b>template <</b><em>lista parametri template</em>
+<b>template &lt;&lt;/b><em>lista parametri template</em>
 <b>></b>
 <b>using</b> <em>identificatore</em> <b>=</b>  <em>tipo</em><b>;</b>
 
@@ -286,7 +289,7 @@ template<typename T>
 int main(){ 
     string s1 = "Hello"; 
     string s2 = "World"; 
-    cout << "Max(s1, s2): " << Max(s1, s2) << endl;   
+    cout &lt;&lt; "Max(s1, s2): " &lt;&lt; Max(s1, s2) &lt;&lt; endl;   
 }
 </code>
 
