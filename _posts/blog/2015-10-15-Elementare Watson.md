@@ -34,7 +34,7 @@ Come avevamo detto la scorsa puntata, la tipizzazione è un affare serio; da gra
 
 # ... nei template
 
-Come sappiamo un costrutto del C++ sono i template (similari in Java ai <i>Generic Class</i>).
+Come sappiamo un costrutto del C++ sono i template (similari in Java ai <i>Generic Class</i>).<br>
 <code>
 template <typename T>
 inline T const& Max (T const& a, T const& b) 
