@@ -191,22 +191,28 @@ int main(){
 }
 </pre>
 
-Un'osservazione dovrebbe nascere; perchè quando il compilatore deve risolvere <code>fattoriale&lt;0>::val</code> non cerca di istanziare ancora la prima dichiarazione di template?
-Perchè l'istanza del template <code>fattoriale&lt;0></code>è stata fatta a monte prima della deduzione di <code>fattoriale&lt;1>::val</code> .
+Un'osservazione dovrebbe nascere; perchè quando il compilatore deve risolvere 
+<pre>fattoriale&lt;0>::val</pre>
+ non cerca di istanziare ancora la prima dichiarazione di template?
+
+Perchè l'istanza del template <pre>fattoriale&lt;0></pre> 
+è stata fatta prima della deduzione di <pre>fattoriale&lt;1>::val</pre> .
 
 # Argomenti dei template
 
 Abbiamo visto che gli argomenti di un template possono essere, tipi T (identificabili anche con typename) o valori V, entrambi conosciuti a compile-time .
+
 Altri "tipi" di parametri possono essere:
 <ul>
-<ue>classi</ue>
-<ue>template</ue>
-<ue>template o classi con valore di default</ue>
+<li>classi</li>
+<li>template</li>
+<li>template o classi con valore di default</li>
 </ul>
 
 dal C++11 si può definire anche una lista <i>variadic</i> di parametri detta [parameter pack][2] .
 
-Ci sono però delle eccezioni.
+Ci sono però delle eccezioni:
+
 <pre>
 template&lt;const char *V>
 void funzione(){
@@ -236,15 +242,15 @@ main.cpp:10:21: error: '"Hello"' is not a valid template argument for type 'cons
    funzione<"Hello">();
 </pre>
 
-<em>because string literals can never be used in this context</em>
+<b><em>because string literals can never be used in this context</em><b>
 il messaggio è chiaro ed esplicito.
 
 Altri vincoli sui parametri di un template non di tipo è che non siano:
 <ul>
-<el> il risultato dell'operazione typeid</el>
-<el> un oggetto temporaneo</el>
-<el> un porzione componente di un oggetto (classe base, membri di classe etc) </el>
-<el> la variabile __func__ , che translittera in formato const char* il nome della funzione</el>
+<li> il risultato dell'operazione typeid</li>
+<li> un oggetto temporaneo</li>
+<li> un porzione componente di un oggetto (classe base, membri di classe etc) </li>
+<li> la variabile __func__ , che translittera in formato const char* il nome della funzione</li>
 </ul>
 
 # Template di template
@@ -267,7 +273,8 @@ int main(){
 
 # Alias di template 
 
-<b>template &lt;&lt;/b><em>lista parametri template</em>
+La sintassi
+<b>template &lt;</b><em>lista parametri template</em>
 <b>></b>
 <b>using</b> <em>identificatore</em> <b>=</b>  <em>tipo</em><b>;</b>
 
