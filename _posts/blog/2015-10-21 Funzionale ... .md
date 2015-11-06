@@ -27,8 +27,8 @@ categories:
 
 ##  Espressioni λ e linguaggio funzionale
 
-> In informatica si dice che una funzione produce un effetto collaterale quando modifica un valore o uno stato al di fuori del proprio scoping locale.
-<cide> https://it.wikipedia.org/wiki/Effetto_collaterale_%28informatica%29  
+>  <span class="teaser">In informatica si dice che una funzione produce un effetto collaterale quando modifica un valore o uno stato al di fuori del proprio scoping locale.</span>
+<cite> https://it.wikipedia.org/wiki/Effetto_collaterale_%28informatica%29</cite>
 
 Un linguaggio funzionale non è solo un linguaggio che ha una funzione tra i suoi tipi, altrimenti anche il C potrebbe essere tale, ma un linguaggio in cui le funzioni non hanno effetti collaterali.
 I linguaggi funzionali puri sono nati negli anni '50 dall'informatica teorica e dallo studio della correttezza formale dei programmi.
