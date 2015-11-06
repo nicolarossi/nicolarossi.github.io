@@ -1,6 +1,6 @@
 ---
 layout: page-fullwidth
-title: " C++ ed espressioni"
+title: " C++ ed espressioni λ"
 subheadline: "C++ come linguaggio funzionale"
 meta_teaser: "Come il C++11,C++14 sono un linguaggi funzionali ..."
 teaser: "Come il C++11,C++14 sono un linguaggi funzionali ..."
