@@ -40,6 +40,8 @@ I linguaggi funzionali puri sono nati negli anni '50 dall'informatica teorica e 
 
 I più famosi sono sicuramente LISP e Haskell, il primo è usato come interprete in emacs per i plugin e le estensioni; se sbirciate nel file <code>~/.emacs.d</code> troverete linguaggio LISP.
 
+<b>Curiosità:</b> In LISP è stato scritto il primo linguaggio ad auto-compilare se stesso, sbirciate [questa][2].
+
 Nei linguaggi funzionali esiste una ulteriore classificazione dovuta alla semantica dell'istanza del linguaggio.
 <ul>
 <li>Eager (o Call-by-value)</li>
@@ -97,7 +99,7 @@ auto f = [](int x){
 
 Questa funzione non è più [side-effect] [] perchè modifica l'oggetto <code>std::cout</code> e quindi lo stato in cui è eseguito.
 
-Se guardiamo il binario generato e l'assembly (richiamandola funzione per ) che vediamo?
+Se guardiamo il binario generato e l'assembly, rinominandola <em>funzione</em>, troveremo:
 
 <pre>
 0000000000600f15 b funzione
@@ -111,8 +113,8 @@ Se guardiamo il binario generato e l'assembly (richiamandola funzione per ) che 
 	
 Quindi :
 <ul>
-<li> metti 2 in %esi </li>
-<li> metti funzione in %edi</li>
+<li> metti 2 in <code>%esi</code> </li>
+<li> metti funzione in <code>%edi</code> </li>
 </ul>
 e richiama la funzione 	<code>_ZNKUliE_clEi</code> per gli amici:
 <pre>
@@ -124,8 +126,6 @@ o più semplicemente :
 	<lambda(int)>::operator() (&funzione, 1)
 </pre>
 
-Curiosità:
-In LISP è stato scritto il primo linguaggio ad auto-compilare se stesso, sbirciate [questa][2].
 
 [1]: https://en.wikipedia.org/wiki/Automated_theorem_proving
 [2]: ftp://publications.ai.mit.edu/ai-publications/pdf/AIM-039.pdf
