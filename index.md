@@ -7,17 +7,17 @@
 layout: frontpage
 title: "Nicola Rossi – Blog"
 header:
-   image_fullwidth: "lago_braies_croda_becco_1024x768.png"
+   image_fullwidth: "lago_braies_croda_becco_1024x768.jpg"
 widget-1:
     title: "Blog & News"
     url: 'http://nicolarossi.github.io/blog/'
     text: '<em>A news aggregation and my articles on ICT stuff:</em></br>Every news to be retained interesting to me is analysed and discussed.'
-    image: blank_page-302x201.png
+    image: blank_page-302x201.jpg
 widget-2:
     title: "Career portfolio"
     url: 'http://nicolarossi.github.io/cv/whoami'
     text: '<em>Professional presentation:</em></br> An extensive personal presentation useful to Human-Resource dept staff looking a genius :)'
-    image: street-302x227.png
+    image: street-302x227.jpg
 widget-3:
     title: "Download projects"
     url: 'https://github.com/nicolarossi'
