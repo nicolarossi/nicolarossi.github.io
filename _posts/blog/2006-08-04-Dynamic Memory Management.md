@@ -23,11 +23,9 @@ categories:
 </div>
 </div><!-- /.medium-4.columns -->
 
-
-
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
-## Lato – A dynamic memory manager.
+## A dynamic memory manager.
 
 Un gestore di memoria "memory manager" è semplicemente una porzione di codice che per "contratto" gestira la memoria RAM a vostra disposizione.
 
