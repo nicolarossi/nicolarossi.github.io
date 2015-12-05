@@ -246,13 +246,13 @@ Procastinando questo test si risparmiano N_CHILD test (di cui N_CHILD -1 tutti c
 Nel caso in cui la maschera del figlio è a "0" il flusso diventa:
 
 <pre>
-f(parent) &RightArrow; f(child[i]) &RightArrow; f(parent) &RightArrow; f(child[i+1])
+getElem(parent) &RightArrow; getElem(child[i]) &RightArrow; getElem(parent) &RightArrow; getElem(child[i+1])
 </pre>
 
 invece che:
 
 <pre>
-f(parent) &RightArrow; f(child[i])
+getElem(parent) &RightArrow; getElem(child[i])
 </pre>
 
 Ma visto che tanto in quel caso la pipeline viene svuotata che sia svuotata 2 volte in più una pipeline già vuota non fà differenza.
