@@ -2,8 +2,8 @@
 layout: page-fullwidth
 title: "DIY memory management"
 subheadline: "Memory management"
-meta_teaser: "Un più veloce gestore della memoria dinamica creato creato per incrementare la velocità di un motore di scacchi"
-teaser: "Un più veloce gestore della memoria dinamica creato creato per incrementare la velocità di un motore di scacchi"
+meta_teaser: "Un gestore della memoria dinamica performante creato per incrementare la velocità di un motore di scacchi"
+teaser: "Un gestore della memoria dinamica performante creato per incrementare la velocità di un motore di scacchi"
 header:
     image: bicycle.jpg
     background-color: "#0183c4"
@@ -67,9 +67,9 @@ Quali possono essere i vantaggi?
 - Performance maggiori.
  Dovuti al minor numero di salti tra user-mode e kernel-mode (questi "salti" creano dei sovraccarichi alla CPU per switchare in kernel mode.
 
-Un esempio che è quello che mi ha portato a scrivere questo memory manager è accaduto all'autore quando per diletto ha progettato un motore di scacchi; tale software faceva un vastissimo uso di <code>malloc</code> e <code>free</code> (occupavano il 60% delle operazioni) e per questo invece di riscrivere il codice in una forma in cui non usasse tali operazioni, ha riscritto tali API in modo che fossero più performanti.
+Un esempio che è quello che mi ha portato a scrivere questo memory manager è accaduto all'autore quando per diletto ha progettato un motore di scacchi[^chessengine]; tale software faceva un vastissimo uso di <code>malloc</code> e <code>free</code> (occupavano il 60% delle operazioni) e per questo invece di riscrivere il codice in una forma in cui non usasse tali operazioni, ha riscritto tali API in modo che fossero più performanti.
 
-Il è basato
+L'archiettura è 
 
 
 # Gerarchia di memoria
@@ -85,7 +85,12 @@ Se vogliamo leggere/scrivere da/su un mattone, deve essere trasportato fisicamen
 Il sogno di chi progetta un calcolatore performante è di poter usare le memorie più largamente disponibili (situate nella parte bassa della piramide) alla velocità di quelle più performanti (situate nella parte alta della piramide) per fare questo esisterà una combinazione di sistemi software e hardware che hanno la responsabilità di spostare i mattoni tra i piani della piramide per farli leggere alla puntina.
 
 
-[kernel] a meno di quella che il kernel riserva per se
+[kernel]: a meno di quella che il kernel riserva per se
+[chessengine]: Se analizzate l'architettura di programma che gioca a scacchi questo può essere diviso in 2 parti:
+1. l'interfaccia grafica
+2. il backend logico che calcola la mossa migliore da fare
+	quest'ultimo è un motore di scacchi
+
 
 </div><!-- /.medium-8.columns -->
 </div><!-- /.row -->
