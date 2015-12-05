@@ -313,7 +313,7 @@ void freeElem(aMemArea_t *ptrWA,int nElem){
 </pre>
 
 Nell'albero a sx del nodo <code>frH</code> ci sono "<code>offSet</code>" elementi , "<code>val</code>" è la posizione relativa a questi del nodo da liberare .
-Il valore di "<code></code>idx" indica quale è il sottoalbero che lo contiene per saperlo bisognerebbe dividere "<code></code>val" per il numero di elementi contenuti in ogni sotto albero all'altezza "<code>L</code>" e sarebbe <code>32^L = (2^5)^L = (2^(5*L))</code> e dividere per <code>(2^m)</code> si usa ( <code>>>m</code>)
+Il valore di "<code>idx</code>" indica quale è il sottoalbero che lo contiene per saperlo bisognerebbe dividere "<code>val</code>" per il numero di elementi contenuti in ogni sotto albero all'altezza "<code>L</code>" e sarebbe <code>32^L = (2^5)^L = (2^(5*L))</code> e dividere per <code>(2^m)</code> si usa ( <code>>>m</code>)
 
 Se si impone che ogni nodo dell'albero ha 2^k figli per sapere k è <code>LOG2_N_CHILD</code>
 
