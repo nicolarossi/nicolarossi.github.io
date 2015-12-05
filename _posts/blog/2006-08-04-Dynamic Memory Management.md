@@ -5,7 +5,7 @@ subheadline: "Memory management"
 meta_teaser: "Faster dynamic memory manager created to increase speed in a chess engine"
 teaser: "Faster dynamic memory manager created to increase speed in a chess engine"
 header:
-  image:  bicycle.jpg
+    image: bicycle.jpg
     background-color: "#0183c4"
     caption: Image by David Marcu
     caption_url: "https://unsplash.com/davidmarcu"
@@ -17,7 +17,6 @@ image:
 categories:
     - Programming
 ---
-
 <div class="row">
 <div class="medium-4 medium-push-8 columns" markdown="1">
 <div class="panel radius" markdown="1">
@@ -27,7 +26,6 @@ categories:
 {:toc}
 </div>
 </div><!-- /.medium-4.columns -->
-
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
