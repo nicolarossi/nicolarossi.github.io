@@ -89,7 +89,7 @@ Perchè data una maschera di 32 bit posso sapere quale è il primo bit a 1 trami
 <pre>
 typedef struct nodeFreeHandle{
   int_32 mask; //--- Maschera per sapere chi e' libero e chi no.
-  struct nodeFreeHandle **child; //--- Vettore di 32 figli
+  struct nodeFreeHandle **child; //--- Vettore di figli
   struct nodeFreeHandle *parent; //--- Padre (nullo per il root node dell'albero)
   int offSet;  //--- Nell'area lineare da controllare che indirizzi stiamo controllando ? da offSet a offSet + ...
   int nLevel;  //--- Livello nell'albero aka: Distanza dal padre 
@@ -111,7 +111,7 @@ typedef struct aMemArea{
 
 # Costruzione iniziale
 
-Nel programma per usare  <code>aMemArea_t </<code> che controlla la gestione dinamica <code>malloc/free</code> di <code>nElem</<code> elementi di dimensione <code>size</code> useremo lo statement:
+Nel programma per usare un "oggetto" <code>aMemArea_t</code> che controlla la gestione dinamica <code>malloc/free</code> di <code>nElem</<code> elementi di dimensione <code>size</code> useremo lo statement:
  
 <pre>
   ptrWA=(aMemArea_t*) createWorkArea(sizeArea,sizeof(board_t));
