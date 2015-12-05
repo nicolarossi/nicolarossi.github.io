@@ -42,7 +42,14 @@ Per fare questo utilizza una serie di layer software per fornire i servizi di ge
 - Ogni processo dispone in linea teorica dell'intero spazio di indirizzamento logico, che su macchine a 32bit è di 4Gbyte; quindi come fanno più processi a condividere uno stesso spazio la cui somma totale può superare quella dello spazio degli indirizzi fisici di una macchina? .
 La risposta è nel servizio di <em>Traduzione da indirizzi logici a fisici</em>
 
-- Esiste un concetto nella architettura  dei calcolatori che si chiama "gerarchia di memoria", che si può spiegare con una metafora descritta in un post apposito.
+- Esiste un concetto nella architettura  dei calcolatori che si chiama "gerarchia di memoria", che si può spiegare efficacemente con questa figura onirica.
+
+Costruiamo una piramide in cui negli strati più bassi della piramide sono presenti le memorie più economiche e quindi disponibili in maggiore quantità <em>(dischi rigidi, nastri, cassette DAT, servizi di cloud storage etc etc )</em> e nella parte più alta invece troviamo le memorie più veloci e performanti <em> Ram, cache, registri della CPU etc etc </em>.
+Supponiamo che in cima a questa piramide sia adagiata una puntina che legge e scrive sui mattoni della piramide.
+
+Se vogliamo leggere/scrivere da/su un mattone dobbiamo portarlo vicino la nostra puntina.
+
+Il sogno di un calcolatore performante è di poter usare le memorie più largamente disponibili (situate nella parte bassa della piramide) alla velocità di quelle più performanti (situate nella parte alta della piramide) per fare questo esisterà una combinazione di sistemi software e hardware che hanno la responsabilità di spostare i mattoni tra i piani della piramide per farli leggere alla puntina.
 
 La gestione della memoria "virtuale" (o di swap) divide lo spazio d'indirizzamento in "pagine" e gestisce la loro posizione nella gerarchia di memoria.
 
