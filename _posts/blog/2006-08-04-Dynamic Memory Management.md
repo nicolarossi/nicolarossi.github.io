@@ -46,7 +46,7 @@ La risposta è nel servizio di <em>Traduzione da indirizzi logici a fisici</em>
 
 La gestione della memoria "virtuale" (o di swap) divide lo spazio d'indirizzamento in "pagine" e gestisce la loro posizione nella gerarchia di memoria.
 
-- Gestione della memoria logica "allocando"/"deallocando" memoria al processo che la richiede/libera.
+- Gestione della memoria logica allocando/deallocando memoria al processo che la richiede/libera.
 
 I primi 2 punti vengono effettuati dal sistema operativo insieme alla collaborazione dei firmware dei vari device sottostanti (dischi rigidi, RAM, Cache) .
 
