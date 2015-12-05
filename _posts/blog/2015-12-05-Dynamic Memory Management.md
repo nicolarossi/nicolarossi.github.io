@@ -1,7 +1,7 @@
 ---
 layout: page-fullwidth
-title: "DIY memory management"
-subheadline: "Memory management"
+title: "DIY a dynamic memory manager"
+subheadline: "Speed-up"
 meta_teaser: "Un gestore della memoria dinamica performante creato per incrementare la velocità di un motore di scacchi"
 teaser: "Un gestore della memoria dinamica performante creato per incrementare la velocità di un motore di scacchi"
 header:
@@ -29,7 +29,7 @@ categories:
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
-## Lato - A dynamic memory manager.
+## DIY - Do It Yourself a dynamic memory manager.
 
 Un gestore di memoria è semplicemente una porzione di codice che gestirà la memoria RAM del device [^1] e la metterà a disposizione dei processi che ne fanno uso.
 
@@ -119,7 +119,7 @@ typedef struct aMemArea{
 
 # Costruzione iniziale
 
-Nel programma per usare un "oggetto" <code>aMemArea_t</code> per controllare la gestione dinamica di <code>nElem<code> elementi di dimensione <code>size</code> useremo lo statement:
+Nel programma per usare un "oggetto" <code>aMemArea_t</code> per controllare la gestione dinamica di <code>nElem</code> elementi di dimensione <code>size</code> useremo lo statement:
  
 <pre>
   ptrWA=(aMemArea_t*) createWorkArea(sizeArea,sizeof(board_t));
@@ -236,7 +236,7 @@ Se non ci sono slot liberi, la maschera del padre viene aggiornata e viene effet
 
 questa cosa potrebbe sembrare non aver senso ma in realtà ha un vantaggio.
 
-Ogni volta che una foglia aggiorna la sua maschera e restituire un elemento (in questo caso un indirizzo)
+Ogni volta che una foglia aggiorna la sua maschera e restituisce un elemento (in questo caso un indirizzo)
 
 <pre>
     } else {
@@ -260,11 +260,11 @@ getElem(parent) &RightArrow; getElem(child[i]) &RightArrow; getElem(parent) &Rig
 invece che:
 
 <pre>
-getElem(parent) &RightArrow; getElem(child[i])
+getElem(parent) &RightArrow; getElem(child[i+1])
 </pre>
 
-Ma visto che tanto in quel caso la pipeline viene svuotata che sia svuotata 2 volte in più una pipeline già vuota non fà differenza.
-Invece il risparmio di quei N_CHILD è oggettivo.
+Il "problema" sarebbe che in quel caso la pipeline viene svuotata, ma il fatto che sia svuotata 2 volte in più una pipeline già vuota non fà differenza.
+Invece il risparmio di quei N_CHILD test non effettuati è costante.
 
 Nel caso di un elemento non-foglia il comportamento è simile ovviamente
 
@@ -284,7 +284,7 @@ Nel caso di un elemento non-foglia il comportamento è simile ovviamente
 }
 </pre>
 
-Si potrebbe pensare però che nel caso che l'albero sia vuoto si entri in un loop infinito, tra padre e figlio che si chiedono a vicenda l'elemento libero o visto che il root-node ha padre NULL il processo possa generare un SIGSEGV (traduzione per i Javisti NullPointerException ).
+Si potrebbe pensare però che nel caso che l'albero sia vuoto si entri in un loop infinito, tra padre e figlio che si chiedono a vicenda l'elemento libero o visto che il root-node ha padre NULL il processo possa generare un SIGSEGV.
 
 In realtà la <code>getElem</code> è una funzione interna, lo sviluppatore usa <code>aSmallMalloc</code>  che essa contiene il check sul numero di elementi liberi, quindi <code>getElem</code> viene richiamata se e solo se c'è almeno un elemento libero.
 
@@ -303,8 +303,10 @@ La disallocazione di un elemento ha la peculiarità che invece di usare l'indiri
 Questo per una scelta implementativa consapevole, a discapito di una perdità di flessibilità ma a vantaggio delle performance.
 
 Il calcolo da indirizzo assoluto a relativo sarebbe stato un doppio costo:
+
 1. Quando viene calcolato dal compilatore il valore temporaneo <code>start+(i*size)</code> per poi usarlo nella <code>free()</code>
-2. Quando dall'API bisogna tradurre da indirizzo assoluto <code>start+(i*size)</code> ad <code>i</code> per identificare lo slot da "liberare"
+
+2. Quando dall'API bisogna tradurre da indirizzo assoluto <code>start+(i*size)</code> ad <code>i</code> per identificare lo slot da "liberare".
 
 L'implementazione di <code>freeElem()</code> ha delle sorprese.
 
@@ -315,39 +317,49 @@ void freeElem(aMemArea_t *ptrWA,int nElem){
 
   frH=ptrWA->frH;
 
-  //--- 
   for (iLevel=frH->nLevel;iLevel!=1;iLevel--) {
     val=(nElem - (frH->offSet)) ;
 </pre>
 
-Nell'albero a sx del nodo <code>frH</code> ci sono "<code>offSet</code>" elementi , "<code>val</code>" è la posizione relativa a questi del nodo da liberare .
-Il valore di "<code>idx</code>" indica quale è il sottoalbero che lo contiene per saperlo bisognerebbe dividere "<code>val</code>" per il numero di elementi contenuti in ogni sotto albero all'altezza "<code>L</code>" e sarebbe <code>32^L = (2^5)^L = (2^(5*L))</code> e dividere per <code>(2^m)</code> si usa ( <code>>>m</code>)
-
-Se si impone che ogni nodo dell'albero ha 2^k figli per sapere k è <code>LOG2_N_CHILD</code>
+Nell'albero a sx del nodo <code>frH</code> ci sono <code>offSet</code> elementi , <code>val</code> quindi è la posizione relativa a questi del nodo da liberare.
 
 <pre>
     idx=((val)>>(LOG2_N_CHILD*(iLevel-1)));
-    frH->mask=frH->mask | (1&gt;&gt;idx); 
-    frH=frH->child[idx];
+
+    frH->mask=frH->mask | (1&gt;&gt;idx);
+
+    frH=frH->child[idx]; 
   }
 }
 </pre>
 
+
+Il valore di <code>idx</code> indica quale è il sottoalbero che lo contiene e per saperlo bisogna dividere <code>val</code> per il numero di elementi contenuti in ogni sotto albero all'altezza <code>L</code> che sarebbe <code>(2^k)^L = 2^(k*L)</code> e per dividere <code>2^m</code> si usa l'operatore shift a destra <code>>></code> .
+
+Se si impone che ogni nodo dell'albero ha <code>2^k</code> figli, k sarà <code>LOG2_N_CHILD</code>
+
+Lo shift a sx <code>&gt;&gt;</code> invece serve per costruire la maschera per settare il bit a posizione <code>idx</code>
+
+
 # Risultati
 
-Compilando con flag <code>-O2</code> ed eseguendo un benchmark in cui si eseguono 2^20 malloc/free per 100 volte i risultati sono:
+Compilando con flag <code>-O2</code> ed eseguendo un benchmark di 2^20 malloc/free per 100 volte i risultati sono buoni:
 
 <table>
 <thead>
-<tr>Memory manager </tr><th>Time Sec</th><th>Speed-up</th>
+<tr><th>
+Memory manager</th><th>Time Sec</th><th>Speed-up</th></tr>
 </thead>
 <tfoot>
-<tr>Simple (malloc) </tr><th>5.095550</th><th></th>
-<tr>Customized </tr><th>3.981810</th><th>27%</th>
+<tr>
+<th>Simple (malloc) <th>5.095550</th><th></th>
+<th>Customized <th>3.981810</th><th>27%</th>
+</tr>
 </tfoot>
-<table>
+</table>
 
 # Appendice
+
 - Gerarchia di memoria
 
 Esiste un concetto nella architettura  dei calcolatori che si chiama "gerarchia di memoria", che si può spiegare efficacemente con questa figura onirica.
