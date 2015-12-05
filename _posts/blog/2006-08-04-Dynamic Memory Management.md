@@ -124,14 +124,19 @@ aMemArea_t *createWorkArea(int nElem,int size){
   int nLevel,nMax,iLevel;
   aMemArea_t *ptrWA;
   nodeFreeHandle_t*frH;
-  nMax=N_CHILD;
-  nLevel=1;
+</pre>
 
-  //--- Calcola l'altezza dell'albero minima per controllare nElem elementi con alberi di rango N_CHILD
-  for (;nMax<nElem;nMax*=N_CHILD) {
+Primo passo, viene calcolata la minima altezza dell'albero per controllare <code>nElem</code> elementi con alberi di rango <code>N_CHILD</code>
+
+<pre>
+  for (nLevel=1,nMax=N_CHILD; nMax<nElem ;nMax*=N_CHILD) {
     nLevel++;
   }
+</pre>
 
+Poi vengono create e riempite alcune strutture 
+
+<pre>
   //-- Istanza della struttura dati che verra restituita
   ptrWA=(aMemArea_t*) malloc(sizeof(aMemArea_t)); 
 
@@ -146,18 +151,24 @@ aMemArea_t *createWorkArea(int nElem,int size){
   //- Libera tutti gli elementi dell'albero
   freeAllElement(&(ptrWA->frH),nLevel,nElem);
   
-  //-- Scorre l'albero per sapere quale è il primo blocco libero
+</pre>
+
+Un punto che merita un'pò più attenzione è quando...
+
+<pre>
+  //-- ...scorre l'albero per sapere quale è il primo blocco libero
   for (frH=ptrWA->frH,iLevel=nLevel; iLevel!=1; iLevel--) {
     frH=frH->child[0];
   }
   ptrWA->lastBlockFree=frH;
+</pre>
 
+Questo puntatore è un sistema di caching utile per diminuire le ricerche nell'albero basato sulla "<em>località spaziale</em>" : vicino ad un elemento libero probabilmente ci sarà un'altro nodo elemento.
+
+<pre>
   //-- Setta gli offset degli indirizzi (in modo ricorsivo)
   setOffset(&(ptrWA->frH),0,NULL,0);
-
-  //-- 
-  ptrWA->nFree=nElem;
-
+ ...
   return ptrWA;
 }
 </pre>
@@ -173,17 +184,13 @@ L'utilizzo avviene tramite l'API <code>aSmallMalloc</code> è abbastanza traspar
 
 </pre>
 
-Analizzando l'implementazione si capisce l'utilizzo del puntatore <code>lastBlockFree</code> all'ultima zona che contiene un elemento libero ma non in toto.
+Analizzando l'implementazione della <code>aSmallMalloc</code> si capisce l'utilizzo del puntatore <code>lastBlockFree</code> .
+
+Prima viene interrogato il puntatore all'ultimo albero, in ordine cronologico, che ha restituito un elemento libero e se questo non ritorna un valore utile, si ricomincia la ricerca dal root node dell'albero<code>ptrWA->frH</code>.
 
 <pre>
 void *aSmallMalloc(aMemArea_t *ptrWA,int size){
-  int idx;
-  if (ptrWA->nFree==0) {
-    fprintf(stderr,"\n FRITTATA");
-    exit(-1);
-  }
-
-  ptrWA->nFree--;
+...
   idx=getElem(ptrWA->lastBlockFree,ptrWA);
   if (idx==-1) {
     idx=getElem(ptrWA->frH,ptrWA);
@@ -192,9 +199,90 @@ void *aSmallMalloc(aMemArea_t *ptrWA,int size){
 }
 </pre>
 
-# free
+# Ricerca nell'albero
 
-La liberazione di un elemento invece di usare l'indirizzo assoluto usa la cardinalità :
+Questo è forse il punto più interessante, la ricerca di uno slot libero nell'albero .
+
+Si ponga attenzione
+
+<pre>
+int getElem(nodeFreeHandle_t*frH,aMemArea_t*ptrWA){
+  int idx,idxFree;
+
+  if (frH->child==NULL) {
+    //--- Siamo in una foglia
+    idx=ffs(frH->mask);
+</pre>
+
+L'istruzione <code>ffs(frH->mask)</code> restituisce l'indice del primo bit ad 1 nella maschera .
+
+Se non ci sono slot liberi, la maschera del padre viene aggiornata e viene effettuata una richiesta al padre.
+
+<pre>
+    if (idx==0) { //--- Questo figlio non ha slot liberi 
+      //--- Aggiorna la maschera del padre
+      frH->parent->mask=frH->parent->mask & (~(1<<frH->nChild));
+
+      return getElem(frH->parent,ptrWA);
+</pre>
+
+questa cosa potrebbe sembrare non aver senso ma in realtà ha un vantaggio.
+
+Ogni volta che una foglia aggiorna la sua maschera e restituire un elemento (in questo caso un indirizzo)
+
+<pre>
+    } else {
+      //--- Toglie il bit
+      frH->mask=frH->mask&(~(1<<(idx-1)));
+      ptrWA->lastBlockFree=frH;
+      return idx+frH->offSet;
+    }
+</pre>
+
+dovrebbe ricontrollare se la sua maschera è tutta a 0 ed in quel caso aggiornare la maschera del padre.
+
+Procastinando questo test si risparmiano N_CHILD test (di cui N_CHILD -1 tutti con lo stesso risultato) a discapito di 2 annidamenti di chiamata in più.
+
+Nel caso in cui la maschera del figlio è a "0" il flusso diventa:
+
+<pre>
+f(parent) &RightArrow; f(child[i]) &RightArrow; f(parent) &RightArrow; f(child[i+1])
+</pre>
+
+invece che:
+
+<pre>
+f(parent) &RightArrow; f(child[i])
+</pre>
+
+Ma visto che tanto in quel caso la pipeline viene svuotata che sia svuotata 2 volte in più una pipeline già vuota non fà differenza.
+Invece il risparmio di quei N_CHILD è oggettivo.
+
+Nel caso di un elemento non-foglia il comportamento è simile ovviamente
+
+<pre>
+  } else {
+    idx=ffs(frH->mask);
+    if (idx==0) {
+      //--- Non ci sono piu' blocchi liberi aggiorna la maschera del padre e ripassagli il task
+      frH->parent->mask=frH->parent->mask & (~(1<<frH->nChild));
+      return getElem(frH->parent,ptrWA);
+    }  else {
+      idxFree=getElem(frH->child[idx-1],ptrWA);
+      return idxFree;
+    }
+  }
+
+}
+</pre>
+
+Si potrebbe pensare però che nel caso che l'albero sia vuoto si entri in un loop infinito, tra padre e figlio che si chiedono a vicenda l'elemento libero o visto che il root-node ha padre NULL il processo possa generare un SIGSEGV (traduzione per i Javisti NullPointerException ).
+
+In realtà la <code>getElem</code> è una funzione interna, lo sviluppatore usa <code>aSmallMalloc</code>  che essa contiene il check sul numero di elementi liberi, quindi <code>getElem</code> viene richiamata se e solo se c'è almeno un elemento libero.
+
+# Free
+
+La disallocazione di un elemento ha la peculiarità che invece di usare l'indirizzo assoluto usa la sua cardinalità :
 
 <pre>
 #ifdef USE_MALLOC
@@ -204,9 +292,10 @@ La liberazione di un elemento invece di usare l'indirizzo assoluto usa la cardin
 #endif
 </pre>
 
-Questo per una scelta implementativa consapevole di perdità di flessibilità a vantaggio delle performance.
+Questo per una scelta implementativa consapevole.
+A discapito di una perdità di flessibilità ma a vantaggio delle performance.
 Il calcolo da indirizzo assoluto a relativo sarebbe stato un doppio costo:
-1. Quando viene calcolato dal compilatore <code>param1=start+(i*size); free(param1)</code>
+1. Quando viene calcolato dal compilatore il valore temporaneo <code>start+(i*size)</code> per poi eseguire <code>free()</code>
 2. Quando dall'API bisogna tradurre da indirizzo assoluto <code>start+(i*size)</code> ad <code>i</code> per identificare lo slot da "liberare"
 
 L'implementazione di <code>freeElem()</code> ha delle sorprese .
