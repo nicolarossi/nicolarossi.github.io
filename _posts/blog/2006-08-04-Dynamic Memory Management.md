@@ -31,7 +31,7 @@ categories:
 
 ## Lato - A dynamic memory manager.
 
-Un gestore di memoria è semplicemente una porzione di codice che gestirà la memoria RAM del device[^kernel] e la metterà a disposizione dei processi che ne fanno uso.
+Un gestore di memoria è semplicemente una porzione di codice che gestirà la memoria RAM del device e la metterà a disposizione dei processi che ne fanno uso.
 
 Il memory manager di cui è fornito il kernel del vostro sistema operativo preferito è capace di gestire tutta la memoria hardware di cui dispone il vostro pc/server .
 
@@ -319,13 +319,11 @@ Se si impone che ogni nodo dell'albero ha 2^k figli per sapere k è <code>LOG2_N
 
 <pre>
     idx=((val)>>(LOG2_N_CHILD*(iLevel-1)));
-    frH->mask=frH->mask | (1<<idx); 
+    frH->mask=frH->mask | (1&gt;&gt;idx); 
     frH=frH->child[idx];
   }
 }
 </pre>
-
-
 
 
 # Gerarchia di memoria
