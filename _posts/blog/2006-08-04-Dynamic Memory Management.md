@@ -82,9 +82,9 @@ Un improvement sostanziale è stato effettuato usando invece che un'albero binar
 Perchè data una maschera di 32 bit posso sapere quale è il primo bit a 1 tramite l'istruzione <code>ffs()</code> o <code>RSB</code> su architettura Intel X86 .
 
 
-# Code explained 
+## Code explained 
 
-Struttura dati dell'albero :
+# Struttura dati dell'albero :
 
 <pre>
 typedef struct nodeFreeHandle{
@@ -97,7 +97,7 @@ typedef struct nodeFreeHandle{
 } nodeFreeHandle_t ;
 </pre>
 
-Struttura dati per indicizzare un area lineare
+# Struttura dati per indicizzare un area lineare
 <pre>
 typedef struct aMemArea{
   nodeFreeHandle_t *frH ; //---- Albero per trovare elementi liberi
@@ -109,7 +109,7 @@ typedef struct aMemArea{
 } aMemArea_t;
 </pre>
 
-Costruzione iniziale
+# Costruzione iniziale
 
 Nel programma per usare  <code>aMemArea_t </<code> che controlla la gestione dinamica <code>malloc/free</code> di <code>nElem</<code> elementi di dimensione <code>size</code> useremo lo statement:
  
@@ -162,7 +162,8 @@ aMemArea_t *createWorkArea(int nElem,int size){
 }
 </pre>
 
-Utilizzo:
+# Utilizzo:
+
 L'utilizzo avviene tramite l'API <code>aSmallMalloc</code> è abbastanza trasparente .
 
 <pre>
@@ -191,7 +192,10 @@ void *aSmallMalloc(aMemArea_t *ptrWA,int size){
 }
 </pre>
 
-La liberazione di un elemento invece di usare l'indirizzo usa la cardinalità :
+# free
+
+La liberazione di un elemento invece di usare l'indirizzo assoluto usa la cardinalità :
+
 <pre>
 #ifdef USE_MALLOC
       free(start[i]);
@@ -201,7 +205,11 @@ La liberazione di un elemento invece di usare l'indirizzo usa la cardinalità :
 </pre>
 
 Questo per una scelta implementativa consapevole di perdità di flessibilità a vantaggio delle performance.
-Il calcolo da indirizzo assoluto a relativo sarebbe 
+Il calcolo da indirizzo assoluto a relativo sarebbe stato un doppio costo:
+1. Quando viene calcolato dal compilatore <code>param1=start+(i*size); free(param1)</code>
+2. Quando dall'API bisogna tradurre da indirizzo assoluto <code>start+(i*size)</code> ad <code>i</code> per identificare lo slot da "liberare"
+
+L'implementazione di <code>freeElem()</code> ha delle sorprese .
 
 <pre>
 void freeElem(aMemArea_t *ptrWA,int nElem){
@@ -210,15 +218,21 @@ void freeElem(aMemArea_t *ptrWA,int nElem){
 
   frH=ptrWA->frH;
 
-  //-
+  //--- 
   for (iLevel=frH->nLevel;iLevel!=1;iLevel--) {
-    //    pot= 1<< (LOG2_N_CHILD*(iLevel-1));
-    //    idx=((val)/pot);
     val=(nElem - (frH->offSet)) ;
+</pre>
+Nell'albero a sx del nodo <code></code>frH ci sono "<code></code>offSet" elementi , "<code></code>val" è la posizione relativa a questi del nodo da liberare 
+"<code></code>idx" indica quale è il sottoalbero che lo contiene per saperlo bisognerebbe dividere "<code></code>val" per il numero di elementi contenuti in ogni sotto albero all'altezza "<code></code>L" e sarebbe <code>32^L = (2^5)^L = (2^(5*L))</code> e dividere per <code></code>(2^m) si usa ( <code></code>>>m)
+
+ Se si impone che ogni nodo dell'albero ha 2^k figli per sapere k è <code></code>LOG2_N_CHILD  
+
+<pre>
     idx=((val)>>(LOG2_N_CHILD*(iLevel-1)));
-    frH->mask=frH->mask | (1<<idx);
+    frH->mask=frH->mask | (1<<idx); 
     frH=frH->child[idx];
   }
+
   val=(nElem - (frH->offSet)) ;
   idx=((val)>>(LOG2_N_CHILD*(iLevel-1)));
   frH->mask=frH->mask | (1<<idx);
