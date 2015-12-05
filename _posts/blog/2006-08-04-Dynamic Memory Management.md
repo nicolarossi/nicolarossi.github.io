@@ -2,8 +2,8 @@
 layout: page-fullwidth
 title: "DIY memory management"
 subheadline: "Memory management"
-meta_teaser: "Faster dynamic memory manager created to increase speed in a chess engine"
-teaser: "Faster dynamic memory manager created to increase speed in a chess engine"
+meta_teaser: "Un più veloce gestore della memoria dinamica creato creato per incrementare la velocità di un motore di scacchi"
+teaser: "Un più veloce gestore della memoria dinamica creato creato per incrementare la velocità di un motore di scacchi"
 header:
     image: bicycle.jpg
     background-color: "#0183c4"
@@ -31,40 +31,33 @@ categories:
 
 ## Lato – A dynamic memory manager.
 
-Un gestore di memoria è semplicemente una porzione di codice che gestirà la memoria RAM del device[^ a meno di quella che il kernel riserva per se] e la metterà a disposizione dei processi che ne fanno uso.
+Un gestore di memoria è semplicemente una porzione di codice che gestirà la memoria RAM del device[^kernel] e la metterà a disposizione dei processi che ne fanno uso.
 
 Il memory manager di cui è fornito il kernel del vostro sistema operativo preferito è capace di gestire tutta la memoria hardware di cui dispone il vostro pc/server .
 
-Per fare questo utilizza una serie di layer software per fornire i servizi di gestione della RAM come:
+Per fare questo utilizza una serie di layer software per fornire i servizi di gestione della RAM come risorsa condivisa tra più processi.
 
-- Ogni processo dispone in linea teorica dell'intero spazio di indirizzamento logico, che su macchine a 32bit è di 4Gbyte; quindi come fanno più processi a condividere uno stesso spazio la cui somma totale può superare quella dello spazio degli indirizzi fisici di una macchina? .
-La risposta è nel servizio di <em>Traduzione da indirizzi logici a fisici</em>
+- Traduzione da indirizzi logici a fisici
+Ogni processo dispone in linea teorica dell'intero spazio di indirizzamento logico, che su macchine a 32bit è di 4Gbyte; quindi come fanno più processi a condividere uno stesso spazio la cui somma totale può superare quella dello spazio degli indirizzi fisici di una macchina? .
+La risposta è nel servizio di Traduzione da indirizzi logici a fisici.
 
-- Esiste un concetto nella architettura  dei calcolatori che si chiama "gerarchia di memoria", che si può spiegare efficacemente con questa figura onirica.
+- Gestione della gerarchia di memoria
 
-Costruiamo una piramide in cui negli strati più bassi della piramide sono presenti le memorie più economiche e quindi disponibili in maggiore quantità <em>(dischi rigidi, nastri, cassette DAT, servizi di cloud storage etc etc )</em> e nella parte più alta invece troviamo le memorie più veloci e performanti <em> Ram, cache, registri della CPU etc etc </em>.
-Supponiamo che in cima a questa piramide sia adagiata una puntina che legge e scrive sui mattoni della piramide.
-
-Se vogliamo leggere/scrivere da/su un mattone dobbiamo portarlo vicino la nostra puntina.
-
-Il sogno di un calcolatore performante è di poter usare le memorie più largamente disponibili (situate nella parte bassa della piramide) alla velocità di quelle più performanti (situate nella parte alta della piramide) per fare questo esisterà una combinazione di sistemi software e hardware che hanno la responsabilità di spostare i mattoni tra i piani della piramide per farli leggere alla puntina.
-
-La gestione della memoria "virtuale" (o di swap) divide lo spazio d'indirizzamento in "pagine" e gestisce la loro posizione nella gerarchia di memoria.
+- Gestione della memoria "virtuale" (di cui fà parte anche la famosa memoria di swap) divide lo spazio d'indirizzamento in "pagine" e gestisce la loro "posizione" nella gerarchia di memoria.
 
 - Gestione della memoria logica allocando/deallocando memoria al processo che la richiede/libera.
 
-I primi 2 punti vengono effettuati dal sistema operativo insieme alla collaborazione dei firmware dei vari device sottostanti (dischi rigidi, RAM, Cache) .
+I primi 2 punti di questa lista vengono effettuati dal sistema operativo insieme alla collaborazione dei firmware dei vari device sottostanti (dischi rigidi, RAM, Cache) .
 
-Il terzo punto invece richiede la collaborazione del processo che usa la memoria, tramite l'uso di 2 API fondamentali .
-malloc
-free 
+Il terzo punto invece richiede la collaborazione del processo che usa la memoria, tramite l'uso di 2 API fondamentali: <code>malloc()</code> e <code>free()</code>
 
-La prima richiede al sistema operativo l'allocazione dinamica (ossia a durante l'esecuzione del programma) di un certo quantitativo  di memoria richiesta per lavorare.
+La prima richiede al sistema operativo l'allocazione dinamica (ossia durante l'esecuzione del programma) di un certo quantitativo  di memoria richiesta per lavorare.
+
 La seconda invece informa il sistema operativo che un'area di memoria prima richiesta non è più necessaria.
 
 Perciò basta anteporsi al kernel, durante la fornitura di queste API per fare un proprio gestore della memoria.
 
-Quali sono i vantaggi?
+Quali possono essere i vantaggi?
 <ul>
 <il>
 Maggiore controllo per il debugging
@@ -81,9 +74,20 @@ Il secondo puntò è vero in casi rari ed eccezionali, un esempio che è quello 
 
 Il MM era utilizzato in modo molto specifico.
 
+# Gerarchia di memoria
+
+Esiste un concetto nella architettura  dei calcolatori che si chiama "gerarchia di memoria", che si può spiegare efficacemente con questa figura onirica.
+
+Costruiamo una piramide in cui negli strati più bassi della piramide sono presenti le memorie più economiche e quindi disponibili in maggiore quantità <em>(dischi rigidi, nastri, cassette DAT, servizi di cloud storage etc etc )</em> e nella parte più alta invece troviamo le memorie più veloci e performanti <em> Ram, cache, registri della CPU etc etc </em>.
+
+Supponiamo che in cima a questa piramide sia adagiata una puntina che legge e scrive sui mattoni della piramide i dati di nostro interesse.
+
+Se vogliamo leggere/scrivere da/su un mattone, deve essere trasportato fisicamente sotto la nostra puntina.
+
+Il sogno di chi progetta un calcolatore performante è di poter usare le memorie più largamente disponibili (situate nella parte bassa della piramide) alla velocità di quelle più performanti (situate nella parte alta della piramide) per fare questo esisterà una combinazione di sistemi software e hardware che hanno la responsabilità di spostare i mattoni tra i piani della piramide per farli leggere alla puntina.
 
 
-
+[kernel] a meno di quella che il kernel riserva per se
 
 </div><!-- /.medium-8.columns -->
 </div><!-- /.row -->
