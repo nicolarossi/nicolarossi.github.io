@@ -79,39 +79,47 @@ Un improvement sostanziale è stato effettuato usando invece che un'albero binar
 
 <em>Perchè 32 ?</em>
 
-Perchè data una maschera di 32 bit posso sapere quale è il primo bit a 1 tramite l'istruzione <code>ffs()</code> o <code>RSB</code> su architettura Intel X86 .
+Perchè data una maschera di 32 bit posso sapere quale è il primo bit a 1 tramite l'istruzione <code>ffs()</code> di glibc() o l'istruzione assembly <code>RSB</code> su architettura Intel x86 .
 
 
 ## Code explained 
 
-# Struttura dati dell'albero :
+# Struttura dati dell'albero 
+
+E' un albero bidirezionale, arricchito con alcune informazioni
 
 <pre>
 typedef struct nodeFreeHandle{
-  int_32 mask; //--- Maschera per sapere chi e' libero e chi no.
   struct nodeFreeHandle **child; //--- Vettore di figli
-  struct nodeFreeHandle *parent; //--- Padre (nullo per il root node dell'albero)
+  struct nodeFreeHandle *parent; //--- Padre (nullo per il root-node dell'albero)
+
+  int_32 mask; //--- Maschera per sapere chi e' libero e chi no.
+
   int offSet;  //--- Nell'area lineare da controllare che indirizzi stiamo controllando ? da offSet a offSet + ...
-  int nLevel;  //--- Livello nell'albero aka: Distanza dal padre 
+  int nLevel;  //--- Livello nell'albero aka: distanza dalla radice 
   int nChild;  //--- Che figlio e' del padre?
+
 } nodeFreeHandle_t ;
 </pre>
 
 # Struttura dati per indicizzare un area lineare
+
+All'albero del paragrafo precedente viene affiancata l'area lineare di lavoro da gestire .
+
 <pre>
 typedef struct aMemArea{
   nodeFreeHandle_t *frH ; //---- Albero per trovare elementi liberi
-
-  nodeFreeHandle_t *lastBlockFree; //--- Ultimo blocco che ha tornato un valore allocabile (vedi sezione "Caching")
   void *workArea; //--- area di memoria da controllare
   int nFree; //--- Numero di elementi liberi
+
+  nodeFreeHandle_t *lastBlockFree; //--- Ultimo albero che ha tornato un valore allocabile (vedi sezione "Caching")
 
 } aMemArea_t;
 </pre>
 
 # Costruzione iniziale
 
-Nel programma per usare un "oggetto" <code>aMemArea_t</code> che controlla la gestione dinamica <code>malloc/free</code> di <code>nElem<code> elementi di dimensione <code>size</code> useremo lo statement:
+Nel programma per usare un "oggetto" <code>aMemArea_t</code> per controllare la gestione dinamica di <code>nElem<code> elementi di dimensione <code>size</code> useremo lo statement:
  
 <pre>
   ptrWA=(aMemArea_t*) createWorkArea(sizeArea,sizeof(board_t));
