@@ -8,7 +8,7 @@ header:
 image: bicycle.jpg
     background-color: "#931a0a"
     caption: Image by David Marcu
-    caption_url: https://unsplash.com/davidmarcu
+    caption_url: "https://unsplash.com/davidmarcu"
 image:
     thumb:  bicycle_thumb.jpg
     homepage: bicycle.jpg
