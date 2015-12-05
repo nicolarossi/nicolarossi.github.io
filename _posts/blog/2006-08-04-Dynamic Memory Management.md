@@ -111,7 +111,7 @@ typedef struct aMemArea{
 
 # Costruzione iniziale
 
-Nel programma per usare un "oggetto" <code>aMemArea_t</code> che controlla la gestione dinamica <code>malloc/free</code> di <code>nElem</<code> elementi di dimensione <code>size</code> useremo lo statement:
+Nel programma per usare un "oggetto" <code>aMemArea_t</code> che controlla la gestione dinamica <code>malloc/free</code> di <code>nElem<code> elementi di dimensione <code>size</code> useremo lo statement:
  
 <pre>
   ptrWA=(aMemArea_t*) createWorkArea(sizeArea,sizeof(board_t));
@@ -292,13 +292,13 @@ La disallocazione di un elemento ha la peculiarità che invece di usare l'indiri
 #endif
 </pre>
 
-Questo per una scelta implementativa consapevole.
-A discapito di una perdità di flessibilità ma a vantaggio delle performance.
+Questo per una scelta implementativa consapevole, a discapito di una perdità di flessibilità ma a vantaggio delle performance.
+
 Il calcolo da indirizzo assoluto a relativo sarebbe stato un doppio costo:
-1. Quando viene calcolato dal compilatore il valore temporaneo <code>start+(i*size)</code> per poi eseguire <code>free()</code>
+1. Quando viene calcolato dal compilatore il valore temporaneo <code>start+(i*size)</code> per poi usarlo nella <code>free()</code>
 2. Quando dall'API bisogna tradurre da indirizzo assoluto <code>start+(i*size)</code> ad <code>i</code> per identificare lo slot da "liberare"
 
-L'implementazione di <code>freeElem()</code> ha delle sorprese .
+L'implementazione di <code>freeElem()</code> ha delle sorprese.
 
 <pre>
 void freeElem(aMemArea_t *ptrWA,int nElem){
@@ -311,24 +311,22 @@ void freeElem(aMemArea_t *ptrWA,int nElem){
   for (iLevel=frH->nLevel;iLevel!=1;iLevel--) {
     val=(nElem - (frH->offSet)) ;
 </pre>
-Nell'albero a sx del nodo <code>frH</code> ci sono "<code>offSet</code>" elementi , "<code>val</code>" è la posizione relativa a questi del nodo da liberare 
-"<code></code>idx" indica quale è il sottoalbero che lo contiene per saperlo bisognerebbe dividere "<code></code>val" per il numero di elementi contenuti in ogni sotto albero all'altezza "<code>L</code>" e sarebbe <code>32^L = (2^5)^L = (2^(5*L))</code> e dividere per <code>(2^m)</code> si usa ( <code>>>m</code>)
 
- Se si impone che ogni nodo dell'albero ha 2^k figli per sapere k è <code></code>LOG2_N_CHILD  
+Nell'albero a sx del nodo <code>frH</code> ci sono "<code>offSet</code>" elementi , "<code>val</code>" è la posizione relativa a questi del nodo da liberare .
+Il valore di "<code></code>idx" indica quale è il sottoalbero che lo contiene per saperlo bisognerebbe dividere "<code></code>val" per il numero di elementi contenuti in ogni sotto albero all'altezza "<code>L</code>" e sarebbe <code>32^L = (2^5)^L = (2^(5*L))</code> e dividere per <code>(2^m)</code> si usa ( <code>>>m</code>)
+
+Se si impone che ogni nodo dell'albero ha 2^k figli per sapere k è <code>LOG2_N_CHILD</code>
 
 <pre>
     idx=((val)>>(LOG2_N_CHILD*(iLevel-1)));
     frH->mask=frH->mask | (1<<idx); 
     frH=frH->child[idx];
   }
-
-  val=(nElem - (frH->offSet)) ;
-  idx=((val)>>(LOG2_N_CHILD*(iLevel-1)));
-  frH->mask=frH->mask | (1<<idx);
-  frH=frH->child[idx];
-  ptrWA->nFree++;
 }
 </pre>
+
+
+
 
 # Gerarchia di memoria
 
