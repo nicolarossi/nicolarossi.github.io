@@ -31,7 +31,7 @@ categories:
 
 ## Lato - A dynamic memory manager.
 
-Un gestore di memoria è semplicemente una porzione di codice che gestirà la memoria RAM del device e la metterà a disposizione dei processi che ne fanno uso.
+Un gestore di memoria è semplicemente una porzione di codice che gestirà la memoria RAM del device [^1] e la metterà a disposizione dei processi che ne fanno uso.
 
 Il memory manager di cui è fornito il kernel del vostro sistema operativo preferito è capace di gestire tutta la memoria hardware di cui dispone il vostro pc/server .
 
@@ -65,11 +65,11 @@ Quali possono essere i vantaggi?
 - Profiling
 
 - Performance maggiori.
- Dovuti al minor numero di salti tra user-mode e kernel-mode (questi "salti" creano dei sovraccarichi alla CPU per switchare in kernel mode.
+ Dovuti al minor numero di salti tra user-mode e kernel-mode, visto che questi "salti" creano dei sovraccarichi alla CPU per switchare .
 
-Un esempio che è quello che mi ha portato a scrivere questo memory manager è accaduto all'autore quando per diletto ha progettato un motore di scacchi[^chessengine]; tale software faceva un vastissimo uso di <code>malloc</code> e <code>free</code> (occupavano il 60% delle operazioni) e per questo invece di riscrivere il codice in una forma in cui non usasse tali operazioni, ha riscritto tali API in modo che fossero più performanti.
+Un esempio che è quello che mi ha portato a scrivere questo memory manager è accaduto all'autore quando per diletto ha progettato un motore di scacchi[^2]; tale software faceva un vastissimo uso di <code>malloc</code> e <code>free</code> (occupavano il 60% delle operazioni) e per questo invece di riscrivere il codice in una forma in cui non usasse tali operazioni, ha riscritto tali API in modo che fossero più performanti.
 
-L'idea è semplice e ricopia quello che già fà il kernel, ci teniamo in memoria un albero binario per sapere se un'area lineare da <em>controllare</em> è libera o allocata.
+L'idea è semplice, ci teniamo in memoria un albero binario per sapere se un'area lineare da <em>controllare</em> è libera o allocata.
 
 Se il bit alla radice dell'albero è 0 ciò indica che l'area <em>controllata</em> è totalmente occupata, altrimenti se 1 l'albero ha almeno 1 figlio che controlla un'area allocabile, quindi si passa a cercare in questo figlio dell'albero ad effettuare la ricerca ricorsivamente fino a che non arriveremo ad una foglia che verrà messa a 0 per indicare lo slot occupato.
 
@@ -79,12 +79,12 @@ Un improvement sostanziale è stato effettuato usando invece che un'albero binar
 
 <em>Perchè 32 ?</em>
 
-Perchè data una maschera di 32 bit posso sapere quale è il primo bit a 1 tramite l'istruzione <code>ffs()</code> di glibc() o l'istruzione assembly <code>RSB</code> su architettura Intel x86 .
+Perchè data una maschera di 32 bit si può sapere quale è il primo bit a 1 tramite l'istruzione <code>ffs()</code> di glibc() o l'istruzione assembly <code>RSB</code> su architettura Intel x86 .
 
 
 ## Code explained 
 
-# Struttura dati dell'albero 
+# Struttura dati dell'albero di indicizzazione
 
 E' un albero bidirezionale, arricchito con alcune informazioni
 
@@ -95,7 +95,7 @@ typedef struct nodeFreeHandle{
 
   int_32 mask; //--- Maschera per sapere chi e' libero e chi no.
 
-  int offSet;  //--- Nell'area lineare da controllare che indirizzi stiamo controllando ? da offSet a offSet + ...
+  int offSet;  //--- Nell'area lineare da controllare che elementi stiamo controllando ? da offSet a offSet + ...
   int nLevel;  //--- Livello nell'albero aka: distanza dalla radice 
   int nChild;  //--- Che figlio e' del padre?
 
@@ -171,7 +171,7 @@ Un punto che merita un'pò più attenzione è quando...
   ptrWA->lastBlockFree=frH;
 </pre>
 
-Questo puntatore è un sistema di caching utile per diminuire le ricerche nell'albero basato sulla "<em>località spaziale</em>" : vicino ad un elemento libero probabilmente ci sarà un'altro nodo elemento.
+Questo puntatore è un sistema di caching utile per diminuire le ricerche nell'albero basato sulla "<em>località spaziale</em>" : vicino ad un elemento libero probabilmente ci sarà un'altro elemento libero.
 
 <pre>
   //-- Setta gli offset degli indirizzi (in modo ricorsivo)
@@ -181,7 +181,7 @@ Questo puntatore è un sistema di caching utile per diminuire le ricerche nell'a
 }
 </pre>
 
-# Utilizzo:
+# Utilizzo
 
 L'utilizzo avviene tramite l'API <code>aSmallMalloc</code> è abbastanza trasparente .
 
@@ -333,8 +333,22 @@ Se si impone che ogni nodo dell'albero ha 2^k figli per sapere k è <code>LOG2_N
 }
 </pre>
 
+# Risultati
 
-# Gerarchia di memoria
+Compilando con flag <code>-O2</code> ed eseguendo un benchmark in cui si eseguono 2^20 malloc/free per 100 volte i risultati sono:
+
+<table>
+<thead>
+<tr>Memory manager </tr><th>Time Sec</th><th>Speed-up</th>
+</thead>
+<tfoot>
+<tr>Simple (malloc) </tr><th>5.095550</th><th></th>
+<tr>Customized </tr><th>3.981810</th><th>27%</th>
+</tfoot>
+<table>
+
+# Appendice
+- Gerarchia di memoria
 
 Esiste un concetto nella architettura  dei calcolatori che si chiama "gerarchia di memoria", che si può spiegare efficacemente con questa figura onirica.
 
@@ -346,7 +360,7 @@ Se vogliamo leggere/scrivere da/su un mattone, deve essere trasportato fisicamen
 
 Il sogno di chi progetta un calcolatore performante è di poter usare le memorie più largamente disponibili (situate nella parte bassa della piramide) alla velocità di quelle più performanti (situate nella parte alta della piramide) per fare questo esisterà una combinazione di sistemi software e hardware che hanno la responsabilità di spostare i mattoni tra i piani della piramide per farli leggere alla puntina.
 
-# Bitboard
+- Bitboard
 
 Visto che stiamo parlando di motori di scacchi:
 <pre>
@@ -359,7 +373,7 @@ questa è una scacchiera, o meglio una [bitboard][1] una struttura dati che rapp
 Per esempio se vogliamo identificare la posizione dei pedoni bianchi all'inizio delle partita essi saranno tutti nella seconda traversa della scacchiera e quindi i bit dal 9 al 16 saranno messi a 1 e gli altri bit saranno a 0 .
 Se volessimo indicare la posizione di un pezzo che è stato appena mangiato la bitboard sarà costituita da tutti 0 .
 
-Se vogliamo sapere i pedoni in presa[^presa] basta fare la AND bit-a-bit tra la bitboard dei pedoni e la bitboard delle caselle attaccate.
+Se vogliamo sapere i pedoni in presa basta fare la AND bit-a-bit tra la bitboard dei pedoni e la bitboard delle caselle attaccate.
 
 Se vogliamo invece da una bitboard sapere quale è la posizione del primo bit a 1 useremo l'istruzione <code>ffs()</pre> messa a disposizione dalle Glibc >= 2.12 implementata usando l'istruzione Assembly <code>BSR</code>.
 
@@ -367,14 +381,13 @@ I più intelligenti avranno detto ma perchè non usare un <code>long int</code> 
 Il problema è che nella versione iniziale in cui fu scritto, il codice era su una macchina con registri a 32bit, quindi il <code>long</code> sarebbe stato implementato sempre con 2 AND.
 
 
-[kernel]: a meno di quella che il kernel riserva per se
-[chessengine]: Se analizzate l'architettura di programma che gioca a scacchi questo può essere diviso in 2 parti:
+[^1]: a meno di quella che il kernel riserva per se
+[^2]: Se analizzate l'architettura di programma che gioca a scacchi questo può essere diviso in 2 parti:
 1. l'interfaccia grafica
 2. il backend logico che calcola la mossa migliore da fare
 	quest'ultimo è un motore di scacchi
 
-[bitboard]: https://en.wikipedia.org/wiki/Bitboard
-[presa]: che rischiano di essere mangiati
+[1]: https://en.wikipedia.org/wiki/Bitboard
 
 
 </div><!-- /.medium-8.columns -->
