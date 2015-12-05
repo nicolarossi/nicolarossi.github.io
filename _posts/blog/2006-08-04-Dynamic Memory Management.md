@@ -3,7 +3,7 @@ layout: page-fullwidth
 title: "DIY memory management"
 subheadline: "Memory management"
 meta_teaser: "Faster dynamic memory manager created to increase speed in a chess engine"
-teaser: "<em>Faster dynamic memory manager</em> created to increase speed in a chess engine"
+teaser: "Faster dynamic memory manager created to increase speed in a chess engine"
 header: 
   image:  bicycle.jpg
     background-color: "#0183c4"
