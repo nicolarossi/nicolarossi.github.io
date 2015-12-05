@@ -15,7 +15,7 @@ image:
     caption: Image by David Marcu
     caption_url: "https://unsplash.com/davidmarcu"
 categories:
-    - Programming
+    - Programming,Optimization
 ---
 <div class="row">
 <div class="medium-4 medium-push-8 columns" markdown="1">
