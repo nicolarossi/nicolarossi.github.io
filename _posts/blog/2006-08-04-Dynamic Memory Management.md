@@ -39,7 +39,7 @@ Per fare questo utilizza una serie di layer software per fornire i servizi di ge
 
 - Traduzione da indirizzi logici a fisici
   - Ogni processo dispone in linea teorica dell'intero spazio di indirizzamento logico, che su macchine a 32bit è di 4Gbyte; quindi come fanno più processi a condividere uno stesso spazio la cui somma totale può superare quella dello spazio degli indirizzi fisici di una macchina?.
-  - La risposta è nel servizio di Traduzione da indirizzi logici a fisici.
+  - La risposta è nel servizio di "Traduzione da indirizzi logici a fisici".
 
 - Gestione della gerarchia di memoria
 
