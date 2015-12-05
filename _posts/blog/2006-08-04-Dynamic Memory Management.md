@@ -229,7 +229,7 @@ Se non ci sono slot liberi, la maschera del padre viene aggiornata e viene effet
 <pre>
     if (idx==0) { //--- Questo figlio non ha slot liberi 
       //--- Aggiorna la maschera del padre
-      frH->parent->mask=frH->parent->mask & (~(1<<frH->nChild));
+      frH->parent->mask=frH->parent->mask & (~(1&gt;&gt;frH->nChild));
 
       return getElem(frH->parent,ptrWA);
 </pre>
@@ -241,7 +241,7 @@ Ogni volta che una foglia aggiorna la sua maschera e restituire un elemento (in 
 <pre>
     } else {
       //--- Toglie il bit
-      frH->mask=frH->mask&(~(1<<(idx-1)));
+      frH->mask=frH->mask&(~(1&gt;&gt;(idx-1)));
       ptrWA->lastBlockFree=frH;
       return idx+frH->offSet;
     }
@@ -273,7 +273,7 @@ Nel caso di un elemento non-foglia il comportamento è simile ovviamente
     idx=ffs(frH->mask);
     if (idx==0) {
       //--- Non ci sono piu' blocchi liberi aggiorna la maschera del padre e ripassagli il task
-      frH->parent->mask=frH->parent->mask & (~(1<<frH->nChild));
+      frH->parent->mask=frH->parent->mask & (~(1&gt;&gt;frH->nChild));
       return getElem(frH->parent,ptrWA);
     }  else {
       idxFree=getElem(frH->child[idx-1],ptrWA);
