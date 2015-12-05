@@ -38,8 +38,8 @@ Il memory manager di cui è fornito il kernel del vostro sistema operativo prefe
 Per fare questo utilizza una serie di layer software per fornire i servizi di gestione della RAM come risorsa condivisa tra più processi.
 
 - Traduzione da indirizzi logici a fisici
-	Ogni processo dispone in linea teorica dell'intero spazio di indirizzamento logico, che su macchine a 32bit è di 4Gbyte; quindi come fanno più processi a condividere uno stesso spazio la cui somma totale può superare quella dello spazio degli indirizzi fisici di una macchina?.
-	La risposta è nel servizio di Traduzione da indirizzi logici a fisici.
+  - Ogni processo dispone in linea teorica dell'intero spazio di indirizzamento logico, che su macchine a 32bit è di 4Gbyte; quindi come fanno più processi a condividere uno stesso spazio la cui somma totale può superare quella dello spazio degli indirizzi fisici di una macchina?.
+  - La risposta è nel servizio di Traduzione da indirizzi logici a fisici.
 
 - Gestione della gerarchia di memoria
 
