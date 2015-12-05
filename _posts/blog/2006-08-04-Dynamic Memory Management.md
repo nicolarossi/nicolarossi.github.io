@@ -49,7 +49,7 @@ Per fare questo utilizza una serie di layer software per fornire i servizi di ge
 
 I primi punti di questa lista vengono effettuati dal sistema operativo insieme alla collaborazione dei firmware dei vari device sottostanti (dischi rigidi, RAM, Cache) .
 
-L'ultimo punto invece richiede la collaborazione del processo che usa la memoria, tramite l'uso di 2 API fondamentali: <code>malloc</code> e <code>free</code>
+L'ultimo punto invece richiede la collaborazione del processo che usa la memoria, tramite l'uso di 2 API fondamentali: <code>malloc</code> e <code>free</code> (in realtà la syscall <code>brk()</code> fà il lavoro sporco)
 
 La prima richiede al sistema operativo l'allocazione dinamica, ossia durante l'esecuzione del programma, di un certo quantitativo  di memoria richiesta per lavorare.
 
