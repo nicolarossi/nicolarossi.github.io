@@ -29,19 +29,18 @@ categories:
 </div><!-- /.medium-4.columns -->
 
 
-
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
 ## Lato – A dynamic memory manager.
 
-Un gestore di memoria "memory manager" è semplicemente una porzione di codice che per "contratto" gestira la memoria RAM a vostra disposizione.
+Un gestore di memoria è semplicemente una porzione di codice che gestirà la memoria RAM del device[^ a meno di quella che il kernel riserva per se] e la metterà a disposizione dei processi che ne fanno uso.
 
-Il memory manager di cui è fornito il kernel del vostro sistema operativo è capace di gestire tutta la memoria hardware di cui dispone il vostro pc/server .
+Il memory manager di cui è fornito il kernel del vostro sistema operativo preferito è capace di gestire tutta la memoria hardware di cui dispone il vostro pc/server .
 
 Per fare questo utilizza una serie di layer software per fornire i servizi di gestione della RAM come:
 
-- Ogni processo dispone in linea teorica dell'intero spazio di indirizzamento<sub>logico</sub>, che su macchine da 32bit è di 4Gbyte; quindi come fanno più processi a condividere uno stesso spazio la cui somma totale può superare quella dello spazio degli indirizzi fisici di una macchina? (C'era un tempo, quando eravate piccoli, che i desktop avevano solo pochi Gbyte di Ram ).
-La risposta è nel servizio di <strong>Traduzione da indirizzi logici a fisici</strong>
+- Ogni processo dispone in linea teorica dell'intero spazio di indirizzamento logico, che su macchine a 32bit è di 4Gbyte; quindi come fanno più processi a condividere uno stesso spazio la cui somma totale può superare quella dello spazio degli indirizzi fisici di una macchina? .
+La risposta è nel servizio di <em>Traduzione da indirizzi logici a fisici</em>
 
 - Esiste un concetto nella architettura  dei calcolatori che si chiama "gerarchia di memoria", che si può spiegare con una metafora descritta in un post apposito.
 
