@@ -26,7 +26,7 @@
   side: left
   dropdown:
   - title: "Memory Manager"
-    url: "/project/mm"
+    url: "/project/freeHandle"
 
 #  - title: "Malloc wrapper"
 #    url: "/project/dynamic/"
