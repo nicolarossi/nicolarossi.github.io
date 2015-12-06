@@ -194,7 +194,7 @@ L'utilizzo avviene tramite l'interfaccia <code>aSmallMalloc</code> ed è abbasta
 
 Analizzando l'implementazione della <code>aSmallMalloc</code> si capisce l'utilizzo del puntatore <code>lastBlockFree</code> .
 
-Prima viene interrogato il puntatore all'ultimo albero, in ordine cronologico, che ha restituito un elemento libero e se questo non ritorna un valore utile, si ricomincia la ricerca dal root node dell'albero<code>ptrWA->frH</code>.
+Prima viene interrogato il puntatore all'ultimo albero, in ordine cronologico, che ha restituito un elemento libero; se questo non ritorna un valore utile, si ricomincia la ricerca dal root node dell'albero principale.
 
 <pre>
 void *aSmallMalloc(aMemArea_t *ptrWA,int size){
@@ -211,7 +211,6 @@ void *aSmallMalloc(aMemArea_t *ptrWA,int size){
 
 Questo è forse il punto più interessante, la ricerca di uno slot libero nell'albero .
 
-Si ponga attenzione
 
 <pre>
 int getElem(nodeFreeHandle_t*frH,aMemArea_t*ptrWA){
@@ -222,7 +221,7 @@ int getElem(nodeFreeHandle_t*frH,aMemArea_t*ptrWA){
     idx=ffs(frH->mask);
 </pre>
 
-L'istruzione <code>ffs(frH->mask)</code> restituisce l'indice del primo bit ad 1 nella maschera .
+Si ponga attenzione all'istruzione <code>ffs(frH->mask)</code> restituisce l'indice del primo bit ad 1 nella maschera .
 
 Se non ci sono slot liberi, la maschera del padre viene aggiornata e viene effettuata una richiesta al padre.
 
