@@ -382,16 +382,16 @@ typedef struct {
 } board_t;
 </pre>
 
-questa è una scacchiera, o meglio una [bitboard][1] una struttura dati che rappresenta una proprietà della scacchiera (64 bit) in oggetto.
+questa è una scacchiera, o meglio una [bitboard][1] una struttura dati che rappresenta una proprietà associata alla scacchiera in oggetto.
 Per esempio se vogliamo identificare la posizione dei pedoni bianchi all'inizio delle partita essi saranno tutti nella seconda traversa della scacchiera e quindi i bit dal 9 al 16 saranno messi a 1 e gli altri bit saranno a 0 .
 Se volessimo indicare la posizione di un pezzo che è stato appena mangiato la bitboard sarà costituita da tutti 0 .
 
-Se vogliamo sapere i pedoni in presa basta fare la AND bit-a-bit tra la bitboard dei pedoni e la bitboard delle caselle attaccate.
+Se vogliamo sapere i pedoni in presa basta fare la AND bit-a-bit tra la bitboard dei pedoni e la bitboard delle caselle attaccate dall'avversario.
 
-Se vogliamo invece da una bitboard sapere quale è la posizione del primo bit a 1 useremo l'istruzione <code>ffs()</pre> messa a disposizione dalle Glibc >= 2.12 implementata usando l'istruzione Assembly <code>BSR</code>.
+Se vogliamo invece da una bitboard sapere quale è la posizione del primo bit a 1 useremo l'API <code>ffs()</pre> messa a disposizione dalle Glibc >= 2.12 o l'istruzione Assembly <code>BSR</code>.
 
 I più intelligenti avranno detto ma perchè non usare un <code>long int</code> che è già di 64 bit invece di un <int>? così invece di fare 2 operazioni di AND se ne fà 1 sola .
-Il problema è che nella versione iniziale in cui fu scritto, il codice era su una macchina con registri a 32bit, quindi il <code>long</code> sarebbe stato implementato sempre con 2 AND.
+Il problema è che nella versione iniziale in cui fu scritto, il codice era su una macchina con registri a 32bit, quindi il <code>long</code> sarebbe stato implementato in codice macchina sempre con 2 operazioni a 32bit.
 
 [1]: https://en.wikipedia.org/wiki/Bitboard
 
