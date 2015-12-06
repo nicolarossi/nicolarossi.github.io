@@ -397,6 +397,7 @@ Il problema è che nella versione iniziale in cui fu scritto, il codice era su u
 
 Poi un'pò vi devo pungolare ;)
 
+--------
 
 [1]: https://en.wikipedia.org/wiki/Bitboard
 
