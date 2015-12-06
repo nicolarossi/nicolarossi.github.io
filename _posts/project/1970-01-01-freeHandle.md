@@ -1,9 +1,9 @@
 ---
 layout: page-fullwidth
-title: "Who is Nicola Rossi?"
-subheadline: "Curriculum Vitae"
-meta_teaser: "ICT System & Security Engineer"
-teaser: "<em>ICT System & Security Engineer</em>"
+title: "Un memory manager"
+subheadline: "Project Released"
+meta_teaser: "High performance"
+teaser: "High performance"
 header: no
 image:
     thumb:  homepage_typography_thumb.jpg
@@ -11,7 +11,7 @@ image:
     caption: Image by Antonio
     caption_url: "http://www.aisleone.net/"
 categories:
-    - cv
+    - project
 ---
 <div class="row">
 <div class="medium-4 medium-push-8 columns" markdown="1">
