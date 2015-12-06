@@ -1,18 +1,21 @@
 ---
 layout: page
 title: "Contact"
-meta_title: "Contact and use our contact form"
+meta_title: "Contattami "
 show_meta: false
-subheadline: "Wufoo-powered contact forms"
-teaser: "Get in touch with me? Use the contact form."
+#subheadline: "Wufoo-powered contact forms"
+teaser: "Non ci perdiamo di vista"
 permalink: "/contact/"
 ---
-If you need a fabulous contact form for your website, I suggest you use [Wufoo][1]. You can use three forms for free, you get no spam and if you get more than 100 entries you have to pay.
+
+Se hai dubbi e vuoi approfondire temi, o vuoi propormi collaborazioni contattami.
+Se mi vuoi far entrare in una opportunità di [marketing piramidale][1] lascia stà.
 
 <div class="panel">
-<iframe width="100%" height="650" frameborder="0" scrolling="no" src="https://phlowmedia.wufoo.com/embed/z7x3k1/"></iframe>
+<iframe width="100%" height="650" frameborder="0" scrolling="no" src="https://nicolarossi.wufoo.com/forms/z13pfanp0j7hr7x/"></iframe>
 </div>
 
+Questa pagina fa uso di [Wufoo][1] per fornire il servizio di contact
 
-
- [1]: http://www.wufoo.com/
+ [1]: http://www.butac.it/il-marketing-piramidale/
+ [2]: http://www.wufoo.com/

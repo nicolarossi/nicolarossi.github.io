@@ -21,13 +21,12 @@
   - title: "Publications"
     url: "/cv/whoami/#publications"
   
-- title: "Project released"
-  url: "/project/"
-  side: left
-  dropdown:
-  - title: "Memory Manager"
-    url: "/project/freeHandle"
-
+#- title: "Project released"
+#  url: "/project/"
+#  side: left
+#  dropdown:
+#  - title: "Memory Manager"
+#    url: "/project/freeHandle"
 #  - title: "Malloc wrapper"
 #    url: "/project/dynamic/"
 #  - title: "Stacktrace"
