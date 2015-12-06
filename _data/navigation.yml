@@ -25,12 +25,15 @@
   url: "/project/"
   side: left
   dropdown:
-  - title: "Malloc wrapper"
-    url: "/project/dynamic/"
-  - title: "Stacktrace"
-    url: "/project/stacktrace/"
-  - title: "Run-time tracing"
-    url: "/project/runtimetrace/"
+  - title: "Memory Manager"
+    url: "/project/mm"
+
+#  - title: "Malloc wrapper"
+#    url: "/project/dynamic/"
+#  - title: "Stacktrace"
+#    url: "/project/stacktrace/"
+#  - title: "Run-time tracing"
+#    url: "/project/runtimetrace/"
  
 
 - title: "Search"
