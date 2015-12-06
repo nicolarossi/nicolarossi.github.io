@@ -345,6 +345,7 @@ Lo shift a sx <code>&gt;&gt;</code> invece serve per costruire la maschera per s
 Compilando con flag <code>-O2</code> ed eseguendo un benchmark di 2^20 malloc/free per 100 volte i risultati sono buoni:
 
 <table>
+<thead>
 <tr><th>
 Memory manager</th><th>Time Sec</th><th>Speed-up</th></tr>
 </thead>
