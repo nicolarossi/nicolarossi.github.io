@@ -402,9 +402,8 @@ Poi un'pò vi devo pungolare ;)
 
 [^1]: a meno di quella che il kernel riserva per se
 [^2]: Se analizzate l'architettura di programma che gioca a scacchi questo può essere diviso in 2 parti:
-1. l'interfaccia grafica
-2. il backend logico che calcola la mossa migliore da fare
-	quest'ultimo è un motore di scacchi
+	1. l'interfaccia grafica
+	2. il backend logico che calcola la mossa migliore da fare quest'ultimo è un motore di scacchi
 
 
 </div><!-- /.medium-8.columns -->
