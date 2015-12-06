@@ -235,7 +235,7 @@ Se non ci sono slot liberi, la maschera del padre viene aggiornata e viene effet
 
 questa cosa potrebbe sembrare non aver senso ma in realtà ha un vantaggio.
 
-Ogni volta che una foglia aggiorna la sua maschera e restituisce un elemento (in questo caso un indirizzo)
+Ogni volta che una foglia aggiorna la sua maschera e restituisce un elemento, codice seguente:
 
 <pre>
     } else {
