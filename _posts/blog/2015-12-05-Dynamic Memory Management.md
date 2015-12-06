@@ -351,10 +351,10 @@ Memory manager</th><th>Time Sec</th><th>Speed-up</th></tr>
 </thead>
 <tfoot>
 <tr>
-<th>Simple (malloc) <th>5.095550</th><th></th>
+<th>Simple (malloc) </th><th>5.095550</th><th></th>
 </tr>
 <tr>
-<th>Customized <th>3.981810</th><th>27%</th>
+<th>Customized </th><th>3.981810</th><th>27%</th>
 </tr>
 </tfoot>
 </table>
