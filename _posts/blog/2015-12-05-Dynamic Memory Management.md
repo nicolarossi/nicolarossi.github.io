@@ -365,7 +365,7 @@ Memory manager</th><th>Time Sec</th><th>Speed-up</th></tr>
 
 Esiste un concetto nella architettura  dei calcolatori che si chiama "gerarchia di memoria", che si può spiegare efficacemente con questa figura onirica.
 
-Costruiamo una piramide in cui negli strati più bassi della piramide sono presenti le memorie più economiche e quindi disponibili in maggiore quantità <em>(dischi rigidi, nastri, cassette DAT, servizi di cloud storage etc etc )</em> e nella parte più alta invece troviamo le memorie più veloci e performanti <em> Ram, cache, registri della CPU etc etc </em>.
+Costruiamo una piramide in cui negli strati più bassi della piramide sono presenti le memorie più economiche e quindi disponibili in maggiore quantità <em>(dischi rigidi, nastri, cassette DAT, servizi di cloud storage etc etc )</em> e nella parte più alta invece troviamo le memorie più veloci e performanti <em> (Ram, cache, registri della CPU etc etc )</em>.
 
 Supponiamo che in cima a questa piramide sia adagiata una puntina che legge e scrive sui mattoni della piramide i dati di nostro interesse.
 
@@ -383,18 +383,22 @@ typedef struct {
 </pre>
 
 questa è una scacchiera, o meglio una [bitboard][1] una struttura dati che rappresenta una proprietà associata alla scacchiera in oggetto.
+
 Per esempio se vogliamo identificare la posizione dei pedoni bianchi all'inizio delle partita essi saranno tutti nella seconda traversa della scacchiera e quindi i bit dal 9 al 16 saranno messi a 1 e gli altri bit saranno a 0 .
 Se volessimo indicare la posizione di un pezzo che è stato appena mangiato la bitboard sarà costituita da tutti 0 .
 
 Se vogliamo sapere i pedoni in presa basta fare la AND bit-a-bit tra la bitboard dei pedoni e la bitboard delle caselle attaccate dall'avversario.
 
-Se vogliamo invece da una bitboard sapere quale è la posizione del primo bit a 1 useremo l'API <code>ffs()</pre> messa a disposizione dalle Glibc >= 2.12 o l'istruzione Assembly <code>BSR</code>.
+Se vogliamo invece da una bitboard sapere quale è la posizione del primo bit a 1 useremo l'API <code>ffs()</code> messa a disposizione dalle Glibc >= 2.12 o l'istruzione Assembly <code>BSR</code>.
 
 I più intelligenti avranno detto ma perchè non usare un <code>long int</code> che è già di 64 bit invece di un <int>? così invece di fare 2 operazioni di AND se ne fà 1 sola .
-Il problema è che nella versione iniziale in cui fu scritto, il codice era su una macchina con registri a 32bit, quindi il <code>long</code> sarebbe stato implementato in codice macchina sempre con 2 operazioni a 32bit.
+
+Il problema è che nella versione iniziale in cui fu scritto, il codice era su una macchina con registri a 32bit, quindi il <code>long</code> sarebbe stato implementato in codice macchina sempre con 2 operazioni su registri a 32bit.
+
+Poi un'pò vi devo pungolare ;)
+
 
 [1]: https://en.wikipedia.org/wiki/Bitboard
-
 
 [^1]: a meno di quella che il kernel riserva per se
 [^2]: Se analizzate l'architettura di programma che gioca a scacchi questo può essere diviso in 2 parti:
