@@ -29,7 +29,7 @@ categories:
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
-## DIY - Do It Yourself a dynamic memory manager.
+## Do It Yourself a dynamic memory manager.
 
 Un gestore di memoria è semplicemente una porzione di codice che gestirà la memoria RAM del device [^1] e la metterà a disposizione dei processi che ne fanno uso.
 
@@ -67,9 +67,9 @@ Quali possono essere i vantaggi?
 - Performance maggiori.
  Dovuti al minor numero di salti tra user-mode e kernel-mode, visto che questi "salti" creano dei sovraccarichi alla CPU per switchare .
 
-Un esempio che è quello che mi ha portato a scrivere questo memory manager è accaduto all'autore quando per diletto ha progettato un motore di scacchi[^2]; tale software faceva un vastissimo uso di <code>malloc</code> e <code>free</code> (occupavano il 60% delle operazioni) e per questo invece di riscrivere il codice in una forma in cui non usasse tali operazioni, ha riscritto tali API in modo che fossero più performanti.
+Un esempio che è quello che mi ha portato a scrivere questo memory manager è accaduto all'autore quando per diletto ha progettato un motore di scacchi[^2]; tale software faceva un vastissimo uso di <code>malloc</code> e <code>free</code> occupavano il 60% delle operazioni e per questo invece di riscrivere il codice in una forma in cui non usasse tali operazioni, ha riscritto tali API in modo che fossero più performanti.
 
-L'idea è semplice, ci teniamo in memoria un albero binario per sapere se un'area lineare da <em>controllare</em> è libera o allocata.
+L'idea è semplice, usiamo un albero "binario" per sapere se un'area lineare da <em>controllare</em> è libera o allocata.
 
 Se il bit alla radice dell'albero è 0 ciò indica che l'area <em>controllata</em> è totalmente occupata, altrimenti se 1 l'albero ha almeno 1 figlio che controlla un'area allocabile, quindi si passa a cercare in questo figlio dell'albero ad effettuare la ricerca ricorsivamente fino a che non arriveremo ad una foglia che verrà messa a 0 per indicare lo slot occupato.
 
@@ -183,7 +183,7 @@ Questo puntatore è un sistema di caching utile per diminuire le ricerche nell'a
 
 # Utilizzo
 
-L'utilizzo avviene tramite l'API <code>aSmallMalloc</code> è abbastanza trasparente .
+L'utilizzo avviene tramite l'interfaccia <code>aSmallMalloc</code> ed è abbastanza facile il refactoring del codice, una regexp .
 
 <pre>
        start[i]=aSmallMalloc(ptrWA,sizeof(board_t));
@@ -392,14 +392,14 @@ Se vogliamo invece da una bitboard sapere quale è la posizione del primo bit a 
 I più intelligenti avranno detto ma perchè non usare un <code>long int</code> che è già di 64 bit invece di un <int>? così invece di fare 2 operazioni di AND se ne fà 1 sola .
 Il problema è che nella versione iniziale in cui fu scritto, il codice era su una macchina con registri a 32bit, quindi il <code>long</code> sarebbe stato implementato sempre con 2 AND.
 
+[1]: https://en.wikipedia.org/wiki/Bitboard
+
 
 [^1]: a meno di quella che il kernel riserva per se
 [^2]: Se analizzate l'architettura di programma che gioca a scacchi questo può essere diviso in 2 parti:
 1. l'interfaccia grafica
 2. il backend logico che calcola la mossa migliore da fare
 	quest'ultimo è un motore di scacchi
-
-[1]: https://en.wikipedia.org/wiki/Bitboard
 
 
 </div><!-- /.medium-8.columns -->
