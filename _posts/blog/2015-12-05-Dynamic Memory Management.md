@@ -29,7 +29,7 @@ categories:
 
 <div class="medium-8 medium-pull-4 columns" markdown="1">
 
-## Do It Yourself a dynamic memory manager.
+# Do It Yourself a dynamic memory manager.
 
 Un gestore di memoria è semplicemente una porzione di codice che gestirà la memoria RAM del device [^1] e la metterà a disposizione dei processi che ne fanno uso.
 
@@ -82,9 +82,9 @@ Un improvement sostanziale è stato effettuato usando invece che un'albero binar
 Perchè data una maschera di 32 bit si può sapere quale è il primo bit a 1 tramite l'istruzione <code>ffs()</code> di glibc() o l'istruzione assembly <code>RSB</code> su architettura Intel x86 .
 
 
-## Code explained 
+# Code explained 
 
-# Struttura dati dell'albero di indicizzazione
+## Struttura dati dell'albero di indicizzazione
 
 E' un albero bidirezionale, arricchito con alcune informazioni
 
@@ -102,7 +102,7 @@ typedef struct nodeFreeHandle{
 } nodeFreeHandle_t ;
 </pre>
 
-# Struttura dati per indicizzare un area lineare
+## Struttura dati per indicizzare un area lineare
 
 All'albero del paragrafo precedente viene affiancata l'area lineare di lavoro da gestire .
 
@@ -117,7 +117,7 @@ typedef struct aMemArea{
 } aMemArea_t;
 </pre>
 
-# Costruzione iniziale
+## Costruzione iniziale
 
 Nel programma per usare un "oggetto" <code>aMemArea_t</code> per controllare la gestione dinamica di <code>nElem</code> elementi di dimensione <code>size</code> useremo lo statement:
  
@@ -181,7 +181,7 @@ Questo puntatore è un sistema di caching utile per diminuire le ricerche nell'a
 }
 </pre>
 
-# Utilizzo
+## Utilizzo
 
 L'utilizzo avviene tramite l'interfaccia <code>aSmallMalloc</code> ed è abbastanza facile il refactoring del codice, una regexp .
 
@@ -207,7 +207,7 @@ void *aSmallMalloc(aMemArea_t *ptrWA,int size){
 }
 </pre>
 
-# Ricerca nell'albero
+## Ricerca nell'albero
 
 Questo è forse il punto più interessante, la ricerca di uno slot libero nell'albero .
 
@@ -287,7 +287,7 @@ Si potrebbe pensare però che nel caso che l'albero sia vuoto si entri in un loo
 
 In realtà la <code>getElem</code> è una funzione interna, lo sviluppatore usa <code>aSmallMalloc</code>  che essa contiene il check sul numero di elementi liberi, quindi <code>getElem</code> viene richiamata se e solo se c'è almeno un elemento libero.
 
-# Free
+## Free
 
 La disallocazione di un elemento ha la peculiarità che invece di usare l'indirizzo assoluto usa la sua cardinalità :
 
@@ -340,7 +340,7 @@ Se si impone che ogni nodo dell'albero ha <code>2^k</code> figli, k sarà <code>
 Lo shift a sx <code>&gt;&gt;</code> invece serve per costruire la maschera per settare il bit a posizione <code>idx</code>
 
 
-# Risultati
+## Risultati
 
 Compilando con flag <code>-O2</code> ed eseguendo un benchmark di 2^20 malloc/free per 100 volte i risultati sono buoni:
 
@@ -359,9 +359,9 @@ Memory manager</th><th>Time Sec</th><th>Speed-up</th></tr>
 </tfoot>
 </table>
 
-# Appendice
+## Appendice
 
-- Gerarchia di memoria
+### Gerarchia di memoria
 
 Esiste un concetto nella architettura  dei calcolatori che si chiama "gerarchia di memoria", che si può spiegare efficacemente con questa figura onirica.
 
@@ -373,7 +373,7 @@ Se vogliamo leggere/scrivere da/su un mattone, deve essere trasportato fisicamen
 
 Il sogno di chi progetta un calcolatore performante è di poter usare le memorie più largamente disponibili (situate nella parte bassa della piramide) alla velocità di quelle più performanti (situate nella parte alta della piramide) per fare questo esisterà una combinazione di sistemi software e hardware che hanno la responsabilità di spostare i mattoni tra i piani della piramide per farli leggere alla puntina.
 
-- Bitboard
+### Bitboard
 
 Visto che stiamo parlando di motori di scacchi:
 <pre>
